@@ -4,13 +4,9 @@ class World {
         new Chicken(),
         new Chicken(),
         new Chicken()
-    ]
+    ];
 
-    moveRight() {
-
-    }
-
-    moveLeft() {
+    draw(){
 
     }
 }
