@@ -10,4 +10,5 @@ function init() {
 
     console.log('My character is', world.character);
     console.log("test");
+    console.log("test123");
 }
