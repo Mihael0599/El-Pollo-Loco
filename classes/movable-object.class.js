@@ -1,4 +1,4 @@
-class MovableObject{
+class MovableObject {
     x = 120;
     y = 120;
     img;
@@ -7,13 +7,14 @@ class MovableObject{
     imageChace = {};
     currentImage = 0;
     speed = 0.15;
+    otherDirection = false;
 
-    loadImage(path){
+    loadImage(path) {
         this.img = new Image();
         this.img.src = path;
     }
 
-    loadImages(arr){
+    loadImages(arr) {
         arr.forEach((path) => {
             let img = new Image();
             img.src = path;
@@ -21,13 +22,13 @@ class MovableObject{
         });
     }
 
-    moverRight(){
+    moverRight() {
         console.log("Moving Right")
 
     }
 
-    moveLeft(){
-        setInterval( () => {
+    moveLeft() {
+        setInterval(() => {
             this.x -= this.speed;
         }, 1000 / 60);
     }

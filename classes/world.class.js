@@ -48,7 +48,15 @@ class World {
         })
     }
 
-    addToMap(mo){
-        this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height)
+    addToMap(mo) {
+        this.ctx.save();
+        if (mo.otherDirection) {
+            this.ctx.translate(mo.x + mo.width, mo.y);
+            this.ctx.scale(-1, 1);
+            this.ctx.drawImage(mo.img, 0, 0, mo.width, mo.height);
+        } else {
+            this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
+        }
+        this.ctx.restore();
     }
 }
