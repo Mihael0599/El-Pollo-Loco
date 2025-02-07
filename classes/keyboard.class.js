@@ -1,7 +1,7 @@
-class Keyboard{
-LEFT;
-RIGHT; 
-SPACE;
-UP;
-DOWN;
+class Keyboard {
+    LEFT;
+    RIGHT;
+    SPACE;
+    UP;
+    DOWN;
 }
