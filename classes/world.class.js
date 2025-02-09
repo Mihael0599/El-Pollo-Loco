@@ -1,8 +1,6 @@
 class World {
     character = new Character();
-    enemies = level1.enemies;
-    clouds = level1.clouds;
-    backgorund = level1.backgorund;
+    level = level1;
 
     canvas;
     ctx;
@@ -18,7 +16,7 @@ class World {
         this.setWorld()
     }
 
-    setWorld(){
+    setWorld() {
         this.character.world = this
     }
 
@@ -26,10 +24,10 @@ class World {
         this.ctx.clearRect(0, 0, this.canvas.height, this.canvas.width);
         this.ctx.translate(this.camera_x, 0);
 
-        this.addObjectsToMap(this.backgorund);
+        this.addObjectsToMap(this.level.backgorund);
         this.addToMap(this.character)
-        this.addObjectsToMap(this.enemies);
-        this.addObjectsToMap(this.clouds);
+        this.addObjectsToMap(this.level.enemies);
+        this.addObjectsToMap(this.level.clouds);
         this.ctx.translate(-this.camera_x, 0);
         let self = this;
         requestAnimationFrame(function () {
@@ -37,8 +35,8 @@ class World {
         });
     }
 
-    addObjectsToMap(objects){
-        objects.forEach(o =>{
+    addObjectsToMap(objects) {
+        objects.forEach(o => {
             this.addToMap(o);
         })
     }
