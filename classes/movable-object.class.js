@@ -17,7 +17,7 @@ class MovableObject {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
             } else {
-                this.loadImage('img/2_character_pepe/1_idle/idle/I-1.png');
+                /* this.loadImage('img/2_character_pepe/1_idle/idle/I-1.png'); */ //Muss noch angepasst werden
             }
         }, 1000 / 50);
     }
@@ -31,6 +31,27 @@ class MovableObject {
         this.img.src = path;
     }
 
+    draw(ctx) {
+        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+    }
+
+    drawFrame(ctx) {
+        if (this instanceof Character || this instanceof Chicken || this instanceof Endboss) {
+            ctx.beginPath();
+            ctx.lineWidth = "5";
+            ctx.strokeStyle = "blue";
+            ctx.rect(this.x, this.y, this.width, this.height);
+            ctx.stroke();
+        }
+    }
+
+    isColliding(mo) {
+        return this.x + this.width > mo.x &&
+            this.y + this.height > mo.y &&
+            this.x < mo.x &&
+            this.y < mo.y + mo.height
+    }
+
     loadImages(arr) {
         arr.forEach((path) => {
             let img = new Image();
@@ -38,7 +59,6 @@ class MovableObject {
             this.imageChace[path] = img;
         });
     }
-
     moverRight() {
         this.x += this.speed
     }
