@@ -7,7 +7,7 @@ function init() {
     world = new World(canvas, keyboard);
 }
 
-document.addEventListener("keydown", (e) =>{
+document.addEventListener("keydown", (e) => {
     if (e.keyCode == 39) {
         keyboard.RIGHT = true;
     }
@@ -16,7 +16,7 @@ document.addEventListener("keydown", (e) =>{
         keyboard.LEFT = true;
     }
 
-    if (e.keyCode == 32 ) {
+    if (e.keyCode == 32) {
         keyboard.SPACE = true;
     }
 
@@ -24,11 +24,16 @@ document.addEventListener("keydown", (e) =>{
         keyboard.UP = true;
     }
 
-    if (e.keyCode == 40 ) {
+    if (e.keyCode == 40) {
+        keyboard.UP = true;
+    }
+
+    if (e.keyCode == 68) {
+        keyboard.D = true;
     }
 })
- 
-document.addEventListener("keyup", (e) =>{
+
+document.addEventListener("keyup", (e) => {
     if (e.keyCode == 39) {
         keyboard.RIGHT = false;
     }
@@ -37,7 +42,7 @@ document.addEventListener("keyup", (e) =>{
         keyboard.LEFT = false;
     }
 
-    if (e.keyCode == 32 ) {
+    if (e.keyCode == 32) {
         keyboard.SPACE = false;
     }
 
@@ -45,7 +50,11 @@ document.addEventListener("keyup", (e) =>{
         keyboard.UP = false;
     }
 
-    if (e.keyCode == 40 ) {
+    if (e.keyCode == 40) {
         keyboard.DOWN = false;
+    }
+    
+    if (e.keyCode == 68) {
+        keyboard.D = false;
     }
 })

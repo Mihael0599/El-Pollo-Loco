@@ -1,7 +1,8 @@
 class Keyboard {
-    LEFT;
-    RIGHT;
-    SPACE;
-    UP;
-    DOWN;
+    LEFT = false;
+    RIGHT = false;
+    SPACE = false;
+    UP = false;
+    DOWN = false;
+    D = false;
 }

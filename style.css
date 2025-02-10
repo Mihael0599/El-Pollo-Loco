@@ -3,8 +3,15 @@ body{
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    background-image: url("./img/DALL·E\ 2025-02-10\ 20.22.32\ -\ A\ scenic\ desert\ landscape\ illustration\ with\ vast\ golden\ sand\ dunes\,\ scattered\ dry\ bushes\,\ and\ a\ deep\ blue\ twilight\ sky.\ A\ crescent\ moon\ and\ .webp");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    flex-direction: column;
+    height: 100vh;
+    margin: 0;
 }
 
-canvas{
+/* canvas{
     background-color: black;
-}
+} */

@@ -1,11 +1,14 @@
 class World {
     character = new Character();
     level = level1;
-
     canvas;
     ctx;
     keyboard;
     camera_x = 0;
+    statusBar = new StatusBar();
+    statusBarCoins = new StatusBarCoins();
+    statusBarBottel = new StatusBarBottels();
+    thowableObjects = [];
 
 
     constructor(canvas, keyboard) {
@@ -14,32 +17,50 @@ class World {
         this.keyboard = keyboard
         this.draw();
         this.setWorld();
-        this.checkCollisions();
+        this.run();
     }
 
     setWorld() {
         this.character.world = this
     }
 
-    checkCollisions(){
+    run() {
         setInterval(() => {
-            this.level.enemies.forEach((enemy) => {
-                this.character.isColliding(enemy);
-                if (this.character.isColliding(enemy)) {
-                    console.log('Detection')
-                }
-            })
+            this.checkCollision();
+            this.checkThrowObjects();
         }, 100);
+    }
+    checkThrowObjects() {
+        if (this.keyboard.D) {
+            let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100)
+            this.thowableObjects.push(bottle)
+        }
+    }
+    checkCollision() {
+        this.level.enemies.forEach((enemy) => {
+            this.character.isColliding(enemy);
+            if (this.character.isColliding(enemy)) {
+                this.character.isHit();
+                this.statusBar.setPercentage(this.character.energy)
+            }
+        })
     }
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.height, this.canvas.width);
+
+        this.ctx.translate(this.camera_x, 0);
+        this.addObjectsToMap(this.level.backgorund);
+        this.addObjectsToMap(this.thowableObjects);
+        this.addObjectsToMap(this.level.clouds);
+        this.ctx.translate(-this.camera_x, 0);
+        this.addToMap(this.statusBar);
+        this.addToMap(this.statusBarCoins);
+        this.addToMap(this.statusBarBottel);
         this.ctx.translate(this.camera_x, 0);
 
-        this.addObjectsToMap(this.level.backgorund);
-        this.addToMap(this.character)
+        this.addToMap(this.character);
         this.addObjectsToMap(this.level.enemies);
-        this.addObjectsToMap(this.level.clouds);
         this.ctx.translate(-this.camera_x, 0);
         let self = this;
         requestAnimationFrame(function () {
