@@ -12,6 +12,19 @@ body{
     margin: 0;
 }
 
+img{
+    width: 720px;
+    height: 480px;
+    top: -50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* .game-over{
+    position: absolute;
+    top: calc(50% - 202px);
+} */
 /* canvas{
     background-color: black;
 } */

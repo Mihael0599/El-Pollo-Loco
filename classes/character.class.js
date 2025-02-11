@@ -70,7 +70,11 @@ class Character extends MovableObject {
  
         setInterval(() => {
             if (this.isDead()) {
-                this.playanimation(this.images_dead);
+                if (this.images_dead.length == 7) {
+                    this.loadImage('img/2_character_pepe/5_dead/D-57.png');
+                } else {
+                    this.playanimation(this.images_dead);
+                }
             } else if (this.isHurt()) {
                 this.playanimation(this.images_hurt);
             } else if (this.isAboveGround()) {

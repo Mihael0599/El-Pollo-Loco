@@ -20,7 +20,7 @@ width = 300;
         this.loadImages(this.images_walking);
         this.speed = Math.random() * 1;
         this.animate();
-        this.x = 500;
+        this.x = 2000; 
         this.y = 90;
     }
 
