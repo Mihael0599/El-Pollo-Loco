@@ -18,6 +18,14 @@ class Chicken extends MovableObject {
     }
 
     animate() {
+
+        setInterval(() => {
+            if (this.isEnemyHit()) {
+                console.log("collision");
+                this.loadImage('img/3_enemies_chicken/chicken_normal/2_dead/dead.png');
+            }
+
+        }, 100);
         setInterval(() => {
             this.x -= this.speed;
         }, 1000 / 60);

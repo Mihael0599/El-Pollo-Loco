@@ -1,5 +1,6 @@
 class World {
     character = new Character();
+    chicken = new Chicken();
     level = level1;
     canvas;
     ctx;
@@ -28,6 +29,7 @@ class World {
         setInterval(() => {
             this.checkCollision();
             this.checkThrowObjects();
+            this.checkCollisionBottom();
         }, 100);
     }
     checkThrowObjects() {
@@ -38,12 +40,18 @@ class World {
     }
     checkCollision() {
         this.level.enemies.forEach((enemy) => {
-            this.character.isColliding(enemy);
             if (this.character.isColliding(enemy)) {
                 this.character.isHit();
                 this.statusBar.setPercentage(this.character.energy)
             }
         })
+    }
+    checkCollisionBottom(){
+        this.level.enemies.forEach((enemy) => {
+            if (this.character.isCollidingBottom(enemy) && !this.character.isEnemyHurt()) {
+                this.character.isEnemyHit();
+            }
+        });
     }
 
     draw() {

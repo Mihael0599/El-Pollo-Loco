@@ -5,6 +5,7 @@ class MovableObject extends DrawableObject {
     acceleration = 1;
     energy = 100;
     lastHit = 0;
+    enemyHit = 0;
 
     applyGravity() {
         setInterval(() => {
@@ -20,36 +21,56 @@ class MovableObject extends DrawableObject {
     isAboveGround() {
         if (this instanceof ThrowableObject) {
             return true;
-        }else {
+        } else {
             return this.y < 220;
         }
     }
 
+
+
     isColliding(mo) {
         return this.x + this.width > mo.x &&
+            this.x < mo.x + mo.width &&
             this.y + this.height > mo.y &&
-            this.x < mo.x &&
             this.y < mo.y + mo.height;
     }
 
-    isHit(){
-            this.energy -= 10;
-            if (this.energy < 0) {
-                this.energy = 0;
-                console.log(this.energy)
-            } else {
-                this.lastHit = new Date().getTime();
-            }
+    isCollidingBottom(mo) {
+        return this.y + this.height >= mo.y &&  // A's Unterseite berührt oder überschreitet B's Oberseite
+               this.y + this.height <= mo.y + mo.height / 2 && // A darf nicht tief in B eintauchen
+               this.speedY > 0; // A muss sich nach unten bewegen (fallen)
     }
 
-    isHurt(){
+
+    isHit() {
+        this.energy -= 10;
+        if (this.energy < 0) {
+            this.energy = 0;
+            console.log(this.energy)
+        } else {
+            this.lastHit = new Date().getTime();
+        }
+    }
+
+    isHurt() {
         let timepassed = new Date().getTime() - this.lastHit;
         timepassed = timepassed / 1000;
         return timepassed < 0.5;
     }
 
-    isDead(){
-      return this.energy == 0;
+    isEnemyHit() {
+        this.enemyHit = new Date().getTime();
+    }
+
+    isEnemyHurt() {
+        let timepassed = new Date().getTime() - this.enemyHit;
+        timepassed = timepassed / 1000;
+        console.log("Collision detected with enemy:");
+        return timepassed < 0.5;
+    }
+
+    isDead() {
+        return this.energy == 0;
     }
 
     moverRight() {
