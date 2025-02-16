@@ -9,6 +9,8 @@ class World {
     statusBar = new StatusBar();
     statusBarCoins = new StatusBarCoins();
     statusBarBottel = new StatusBarBottels();
+    coins = new Coins ();
+    bottles = new Bottles();
     thowableObjects = [];
 
 
@@ -46,10 +48,10 @@ class World {
             }
         })
     }
-    checkCollisionBottom(){
+    checkCollisionBottom() {
         this.level.enemies.forEach((enemy) => {
-            if (this.character.isCollidingBottom(enemy) && !this.character.isEnemyHurt()) {
-                this.character.isEnemyHit();
+            if (this.character.isCollidingBottom(enemy) && !enemy.dead) {
+                this.character.speedY = -15;
             }
         });
     }
@@ -68,6 +70,8 @@ class World {
         this.ctx.translate(this.camera_x, 0);
 
         this.addToMap(this.character);
+        this.addToMap(this.coins);
+        this.addToMap(this.bottles)
         this.addObjectsToMap(this.level.enemies);
         this.ctx.translate(-this.camera_x, 0);
         let self = this;
