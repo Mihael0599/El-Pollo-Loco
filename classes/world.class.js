@@ -32,6 +32,8 @@ class World {
             this.checkCollision();
             this.checkThrowObjects();
             this.checkCollisionBottom();
+            this.checkCollisionCoin();
+            this.checkCollisionBottle()
         }, 100);
     }
     checkThrowObjects() {
@@ -56,6 +58,26 @@ class World {
         });
     }
 
+    checkCollisionCoin(){
+        this.level.coins.forEach((coin, index) => {
+            if (this.character.isColliding(coin)) {
+                this.character.coinCollected();
+                this.statusBarCoins.setPercentage(this.character.coinsCollected);
+                this.level.coins.splice(index, 1);
+            }
+        });
+    }
+
+    checkCollisionBottle(){
+        this.level.bottels.forEach((bottles, index) => {
+            if (this.character.isColliding(bottles)) {
+                this.character.bottleCollected();
+                this.statusBarCoins.setPercentage(this.character.bottlesCollected);
+                this.level.coins.splice(index, 1);
+            }
+        });
+    }
+
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.height, this.canvas.width);
 
@@ -70,7 +92,7 @@ class World {
         this.ctx.translate(this.camera_x, 0);
 
         this.addToMap(this.character);
-        this.addToMap(this.coins);
+        this.addObjectsToMap(this.level.coins);
         this.addToMap(this.bottles)
         this.addObjectsToMap(this.level.enemies);
         this.ctx.translate(-this.camera_x, 0);

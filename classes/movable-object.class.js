@@ -5,6 +5,8 @@ class MovableObject extends DrawableObject {
     acceleration = 1;
     energy = 100;
     lastHit = 0;
+    coinsCollected = 0;
+    bottlesCollected = 0;
     enemyHit = 0;
 
     applyGravity() {
@@ -36,9 +38,9 @@ class MovableObject extends DrawableObject {
     }
 
     isCollidingBottom(mo) {
-        return this.y + this.height >= mo.y &&  // A's Unterseite berührt oder überschreitet B's Oberseite
-               this.y + this.height <= mo.y + mo.height / 2 && // A darf nicht tief in B eintauchen
-               this.speedY > 0; // A muss sich nach unten bewegen (fallen)
+        return this.y + this.height >= mo.y && 
+               this.y + this.height <= mo.y + mo.height / 2 && 
+               this.speedY > 0; 
     }
 
 
@@ -51,6 +53,16 @@ class MovableObject extends DrawableObject {
             this.lastHit = new Date().getTime();
         }
     }
+
+    coinCollected() {
+        this.coinsCollected += 20;
+        console.log("Coin collected, total:", this.coinsCollected);
+      }
+
+      bottelCollected() {
+        this.coinsCollected += 20;
+        console.log("Coin collected, total:", this.bottelsCollected);
+      }
 
     isHurt() {
         let timepassed = new Date().getTime() - this.lastHit;
