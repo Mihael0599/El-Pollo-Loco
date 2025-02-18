@@ -16,7 +16,6 @@ class StatusBarCoins extends DrawableObject {
   
     constructor() {
       super();
-      // Lade zunächst das 100%-Bild
       this.loadImage('img/7_statusbars/1_statusbar/1_statusbar_coin/blue/0.png');
       this.loadImages(this.images_coins);
       this.setPercentage(0);
@@ -24,25 +23,23 @@ class StatusBarCoins extends DrawableObject {
   
     setPercentage(percentage) {
       this.percentage = percentage;
-      let path = this.resloveImageIndex();
+      let path = this.images_coins[this.resloveImageIndex()];
       this.img = this.imageChace[path];
     }
   
     resloveImageIndex() {
-      // Hier wird anhand der Prozentzahl der Index bestimmt.
-      // Falls du z.B. pro eingesammelten Coin 10 Punkte erhältst, und 100 das Maximum ist:
-      if (this.percentage >= 100) {
-        return this.images_coins[5];
-      } else if (this.percentage > 80) {
-        return this.images_coins[4];
-      } else if (this.percentage > 60) {
-        return this.images_coins[3];
-      } else if (this.percentage > 40) {
-        return this.images_coins[2];
-      } else if (this.percentage > 20) {
-        return this.images_coins[1];
+      if (this.percentage == 100) {
+        return 5;
+      } else if (this.percentage >= 80) {
+        return 4;
+      } else if (this.percentage >= 60) {
+        return 3;
+      } else if (this.percentage >= 40) {
+        return 2;
+      } else if (this.percentage >= 20) {
+        return 1;
       } else {
-        return this.images_coins[0];
+        return 0;
       }
     }
   }

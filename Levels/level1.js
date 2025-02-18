@@ -14,12 +14,19 @@ const level1 = new Level(
 ],
 [
     new Bottles(),
+/*     new Bottles(),
     new Bottles(),
-    new Bottles(),
-    new Bottles(),
+    new Bottles(), */
 ],
 [
-    new Cloud()
+    new Cloud(),
+    new Cloud(),
+    new Cloud(),
+    new Cloud(),
+    new Cloud(),
+    new Cloud(),
+    new Cloud(),
+
 ],
 [
     new BackgorundObject('img/5_background/layers/air.png', -719),

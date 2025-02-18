@@ -14,7 +14,7 @@ class StatusBarBottels extends DrawableObject {
     percentage = 0;
 
     constructor() {
-        super().loadImage('img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/100.png');
+        super().loadImage('img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/0.png');
         this.loadImages(this.images_bottels);
         this.setPercentage(0);
     }
@@ -30,13 +30,13 @@ class StatusBarBottels extends DrawableObject {
     resloveImageIndex() {
         if (this.percentage == 100) {
             return 5;
-        } else if (this.percentage > 80) {
+        } else if (this.percentage >= 80) {
             return 4;
-        } else if (this.percentage > 60) {
+        } else if (this.percentage >= 60) {
             return 3;
-        } else if (this.percentage > 40) {
+        } else if (this.percentage >= 40) {
             return 2;
-        } else if (this.percentage > 20) {
+        } else if (this.percentage >= 20) {
             return 1;
         } else {
             return 0;

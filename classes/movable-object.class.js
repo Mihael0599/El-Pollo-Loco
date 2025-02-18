@@ -60,7 +60,7 @@ class MovableObject extends DrawableObject {
       }
 
       bottelCollected() {
-        this.coinsCollected += 20;
+        this.bottlesCollected += 20;
         console.log("Coin collected, total:", this.bottelsCollected);
       }
 
