@@ -56,12 +56,10 @@ class MovableObject extends DrawableObject {
 
     coinCollected() {
         this.coinsCollected += 20;
-        console.log("Coin collected, total:", this.coinsCollected);
       }
 
-      bottelCollected() {
+      bottleCollected() {
         this.bottlesCollected += 20;
-        console.log("Coin collected, total:", this.bottelsCollected);
       }
 
     isHurt() {

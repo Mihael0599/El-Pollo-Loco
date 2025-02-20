@@ -37,9 +37,11 @@ class World {
         }, 100);
     }
     checkThrowObjects() {
-        if (this.keyboard.D) {
-            let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100)
-            this.thowableObjects.push(bottle)
+        if (this.keyboard.D && this.character.bottlesCollected > 0) {
+            let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
+            this.thowableObjects.push(bottle);
+            this.character.bottlesCollected -=20;
+            this.statusBarBottel.setPercentage(this.character.bottlesCollected);
         }
     }
     checkCollision() {
@@ -69,11 +71,11 @@ class World {
     }
 
     checkCollisionBottle(){
-        this.level.bottels.forEach((bottles, index) => {
+        this.level.bottles.forEach((bottles, index) => {
             if (this.character.isColliding(bottles)) {
                 this.character.bottleCollected();
-                this.statusBarCoins.setPercentage(this.character.bottlesCollected);
-                this.level.coins.splice(index, 1);
+                this.statusBarBottel.setPercentage(this.character.bottlesCollected);
+                this.level.bottles.splice(index, 1);
             }
         });
     }
@@ -92,9 +94,9 @@ class World {
         this.ctx.translate(this.camera_x, 0);
 
         this.addToMap(this.character);
-        this.addObjectsToMap(this.level.coins);
-        this.addToMap(this.bottles)
         this.addObjectsToMap(this.level.enemies);
+        this.addObjectsToMap(this.level.coins);
+        this.addObjectsToMap(this.level.bottles);
         this.ctx.translate(-this.camera_x, 0);
         let self = this;
         requestAnimationFrame(function () {
