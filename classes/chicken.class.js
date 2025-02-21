@@ -20,7 +20,7 @@ class Chicken extends MovableObject {
     animate() {
 
         setInterval(() => {
-            if (this.isEnemyHit()) {
+            if (this.isEnemyHurt()) {
                 this.loadImage('img/3_enemies_chicken/chicken_normal/2_dead/dead.png');
             }
 

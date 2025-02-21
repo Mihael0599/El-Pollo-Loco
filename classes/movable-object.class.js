@@ -38,29 +38,28 @@ class MovableObject extends DrawableObject {
     }
 
     isCollidingBottom(mo) {
-        return this.y + this.height >= mo.y && 
-               this.y + this.height <= mo.y + mo.height / 2 && 
-               this.speedY > 0; 
+        return this.x + this.width > mo.x &&
+            this.x < mo.x + mo.width &&
+            this.y + this.height <= mo.y + 20 &&
+            this.speedY < 0;
     }
 
+    coinCollected() {
+        this.coinsCollected += 20;
+    }
+
+    bottleCollected() {
+        this.bottlesCollected += 20;
+    }
 
     isHit() {
         this.energy -= 10;
         if (this.energy < 0) {
             this.energy = 0;
-            console.log(this.energy)
         } else {
             this.lastHit = new Date().getTime();
         }
     }
-
-    coinCollected() {
-        this.coinsCollected += 20;
-      }
-
-      bottleCollected() {
-        this.bottlesCollected += 20;
-      }
 
     isHurt() {
         let timepassed = new Date().getTime() - this.lastHit;
@@ -72,10 +71,11 @@ class MovableObject extends DrawableObject {
         this.enemyHit = new Date().getTime();
     }
 
+
     isEnemyHurt() {
         let timepassed = new Date().getTime() - this.enemyHit;
         timepassed = timepassed / 1000;
-        console.log("Collision detected with enemy:");
+        console.log(timepassed);
         return timepassed < 0.5;
     }
 

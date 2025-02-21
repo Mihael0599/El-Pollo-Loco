@@ -54,10 +54,11 @@ class World {
     }
     checkCollisionBottom() {
         this.level.enemies.forEach((enemy) => {
-            if (this.character.isCollidingBottom(enemy) && !enemy.dead) {
-                this.character.speedY = -15;
+            if (this.character.isCollidingBottom(enemy)) {
+                console.log("getroffen");
+                this.character.isEnemyHit();
             }
-        });
+        }); 
     }
 
     checkCollisionCoin(){
