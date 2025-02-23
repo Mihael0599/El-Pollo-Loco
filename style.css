@@ -1,4 +1,4 @@
-body{
+body {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -10,9 +10,10 @@ body{
     flex-direction: column;
     height: 100vh;
     margin: 0;
+    font-family: 'zabras', Arial, Helvetica, sans-serif;
 }
 
-img{
+img {
     width: 720px;
     height: 480px;
     top: -50%;
@@ -21,10 +22,38 @@ img{
     align-items: center;
 }
 
+h1 {
+    font-size: 64px;
+    color: #D3833A;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    letter-spacing: 5px;
+}
+
+@font-face {
+    font-family: 'zabras';
+    src: url('./fonts/Zabars.ttf');
+}
+
+@media only screen and (max-width: 720px) {
+    canvas {
+        width: 100%;
+    }
+}
+
+@media only screen and (max-height: 480px) {
+    canvas {
+        height: 100vh;
+    }
+    h1 {
+        display: none;
+    }
+}
+
 /* .game-over{
     position: absolute;
     top: calc(50% - 202px);
 } */
-/* canvas{
-    background-color: black;
-} */
+canvas{
+    display: block;
+}

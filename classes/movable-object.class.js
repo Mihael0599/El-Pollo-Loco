@@ -3,7 +3,7 @@ class MovableObject extends DrawableObject {
     otherDirection = false;
     speedY = 0;
     acceleration = 1;
-    energy = 100;
+    energy = 5000;
     lastHit = 0;
     coinsCollected = 0;
     bottlesCollected = 0;
@@ -36,17 +36,10 @@ class MovableObject extends DrawableObject {
             this.y + this.height > mo.y &&
             this.y < mo.y + mo.height;
     }
-
-    isCollidingBottom(mo) {
-        return this.x + this.width > mo.x &&
-            this.x < mo.x + mo.width &&
-            this.y + this.height <= mo.y + 20 &&
-            this.speedY < 0;
-    }
-
+    
     coinCollected() {
         this.coinsCollected += 20;
-    }
+     }
 
     bottleCollected() {
         this.bottlesCollected += 20;
@@ -64,18 +57,6 @@ class MovableObject extends DrawableObject {
     isHurt() {
         let timepassed = new Date().getTime() - this.lastHit;
         timepassed = timepassed / 1000;
-        return timepassed < 0.5;
-    }
-
-    isEnemyHit() {
-        this.enemyHit = new Date().getTime();
-    }
-
-
-    isEnemyHurt() {
-        let timepassed = new Date().getTime() - this.enemyHit;
-        timepassed = timepassed / 1000;
-        console.log(timepassed);
         return timepassed < 0.5;
     }
 

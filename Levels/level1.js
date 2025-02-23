@@ -4,6 +4,9 @@ const level1 = new Level(
     new Chicken(),
     new Chicken(),
     new Endboss(),
+    new ChickenSmall(),
+    new ChickenSmall(),
+    new ChickenSmall(),
 ],
 [
     new Coins (0, 5),
@@ -13,11 +16,11 @@ const level1 = new Level(
     new Coins (4, 5),
 ],
 [
-/*     new Bottles(),
     new Bottles(),
     new Bottles(),
     new Bottles(),
-    new Bottles(), */
+    new Bottles(),
+    new Bottles(),
 ],
 [
     new Cloud(),

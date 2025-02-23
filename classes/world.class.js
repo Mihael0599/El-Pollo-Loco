@@ -1,6 +1,7 @@
 class World {
     character = new Character();
     chicken = new Chicken();
+    endBoss = new Endboss();
     level = level1;
     canvas;
     ctx;
@@ -12,6 +13,7 @@ class World {
     coins = new Coins ();
     bottles = new Bottles();
     thowableObjects = [];
+    bottleThrown = false;
 
 
     constructor(canvas, keyboard) {
@@ -24,7 +26,8 @@ class World {
     }
 
     setWorld() {
-        this.character.world = this
+        this.character.world = this;
+        this.endBoss.world = this;
     }
 
     run() {
@@ -33,34 +36,63 @@ class World {
             this.checkThrowObjects();
             this.checkCollisionBottom();
             this.checkCollisionCoin();
-            this.checkCollisionBottle()
-        }, 100);
+            this.checkCollisionBottle();
+            this.checkBottleCollision();
+            if (this.character.isDead()) {
+                this.level.enemies = [];
+                this.level.coins = [];
+                this.level.bottles = [];
+            }
+        }, 10);
     }
     checkThrowObjects() {
-        if (this.keyboard.D && this.character.bottlesCollected > 0) {
+        if (this.keyboard.D && !this.bottleThrown && this.character.bottlesCollected > 0) {
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
             this.thowableObjects.push(bottle);
             this.character.bottlesCollected -=20;
             this.statusBarBottel.setPercentage(this.character.bottlesCollected);
         }
+        if (!this.keyboard.D) {
+            this.bottleThrown = false; 
+        }
     }
     checkCollision() {
-        this.level.enemies.forEach((enemy) => {
+        this.level.enemies.forEach((enemy, index) => {
             if (this.character.isColliding(enemy)) {
-                this.character.isHit();
-                this.statusBar.setPercentage(this.character.energy)
+                if (this.character.speedY <= 0 && (this.character.y + this.character.height - enemy.y) < 30) {
+                    enemy.isEnemyHit();
+                    this.character.jump();
+                    setTimeout(() => {
+                        this.level.enemies.splice(index, 1);
+                    }, 200);
+                } else {
+                    if (!enemy.dead) { 
+                        this.character.isHit();
+                        this.statusBar.setPercentage(this.character.energy);
+                    }
+                }
             }
-        })
+        });
     }
-    checkCollisionBottom() {
-        this.level.enemies.forEach((enemy) => {
-            if (this.character.isCollidingBottom(enemy)) {
-                console.log("getroffen");
-                this.character.isEnemyHit();
-            }
-        }); 
-    }
+    
 
+    
+    checkCollisionBottom() {
+        this.level.enemies.forEach((enemy, index) => {
+            if (this.character.isColliding(enemy)) {
+                if (this.character.speedY < 0 && this.character.y + this.character.height < enemy.y + enemy.height / 2) {
+                    enemy.isEnemyHit();
+                    this.character.jump();
+                     setTimeout(() => {
+                        this.level.enemies.splice(index, 1);
+                    }, 500);
+                } else {
+                    this.checkCollision();
+                }
+            }
+        });
+    }
+    
     checkCollisionCoin(){
         this.level.coins.forEach((coin, index) => {
             if (this.character.isColliding(coin)) {
@@ -80,6 +112,21 @@ class World {
             }
         });
     }
+
+    checkBottleCollision() {
+        this.thowableObjects.forEach((bottle, bottleIndex) => {
+            this.level.enemies.forEach((enemy, enemyIndex) => {
+                if (bottle.isColliding(enemy) && !enemy.dead) {
+                    enemy.isEnemyHit();
+                    setTimeout(() => {
+                        this.level.enemies.splice(enemyIndex, 1);
+                    }, 200);
+                    this.thowableObjects.splice(bottleIndex, 1);
+                }
+            });
+        });
+    }
+    
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.height, this.canvas.width);

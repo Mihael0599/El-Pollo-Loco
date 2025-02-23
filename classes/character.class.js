@@ -2,6 +2,7 @@ class Character extends MovableObject {
 
     y = 80;
     speed = 8;
+
     images_walking = [
         'img/2_character_pepe/2_walk/W-21.png',
         'img/2_character_pepe/2_walk/W-22.png',
@@ -71,10 +72,8 @@ class Character extends MovableObject {
 
         setInterval(() => {
             if (this.isDead()) {
-                if (this.images_dead.length == 7) {
-                    this.loadImage('img/2_character_pepe/5_dead/D-57.png');
-                } else {
-                    this.playanimation(this.images_dead);
+                {
+                this.loadImage('img/2_character_pepe/5_dead/D-57.png');
                 }
             } else if (this.isHurt()) {
                 this.playanimation(this.images_hurt);
