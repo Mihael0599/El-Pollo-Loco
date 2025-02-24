@@ -40,4 +40,14 @@ class DrawableObject {
             ctx.stroke();
         }
     }
+
+    drawFrameItems(ctx){
+        if (this instanceof Bottles || this instanceof Coins) {
+            ctx.beginPath();
+            ctx.lineWidth = "5";
+            ctx.strokeStyle = "red";
+            ctx.rect(this.x + 50, this.y + 25, this.width - 50, this.height - 50);
+            ctx.stroke();
+        }
+    }
 }

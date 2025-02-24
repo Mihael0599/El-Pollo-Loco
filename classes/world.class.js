@@ -10,6 +10,7 @@ class World {
     statusBar = new StatusBar();
     statusBarCoins = new StatusBarCoins();
     statusBarBottel = new StatusBarBottels();
+    statusBarEndboss = new StatusBarEndboss();
     coins = new Coins ();
     bottles = new Bottles();
     thowableObjects = [];
@@ -43,7 +44,7 @@ class World {
                 this.level.coins = [];
                 this.level.bottles = [];
             }
-        }, 10);
+        }, 200);
     }
     checkThrowObjects() {
         if (this.keyboard.D && !this.bottleThrown && this.character.bottlesCollected > 0) {
@@ -74,9 +75,7 @@ class World {
             }
         });
     }
-    
 
-    
     checkCollisionBottom() {
         this.level.enemies.forEach((enemy, index) => {
             if (this.character.isColliding(enemy)) {
@@ -95,7 +94,7 @@ class World {
     
     checkCollisionCoin(){
         this.level.coins.forEach((coin, index) => {
-            if (this.character.isColliding(coin)) {
+            if (this.character.isCollidingItem(coin)) {
                 this.character.coinCollected();
                 this.statusBarCoins.setPercentage(this.character.coinsCollected);
                 this.level.coins.splice(index, 1);
@@ -105,7 +104,7 @@ class World {
 
     checkCollisionBottle(){
         this.level.bottles.forEach((bottles, index) => {
-            if (this.character.isColliding(bottles)) {
+            if (this.character.isCollidingItem(bottles)) {
                 this.character.bottleCollected();
                 this.statusBarBottel.setPercentage(this.character.bottlesCollected);
                 this.level.bottles.splice(index, 1);
@@ -139,6 +138,7 @@ class World {
         this.addToMap(this.statusBar);
         this.addToMap(this.statusBarCoins);
         this.addToMap(this.statusBarBottel);
+        this.addToMap(this.statusBarEndboss)
         this.ctx.translate(this.camera_x, 0);
 
         this.addToMap(this.character);
@@ -163,7 +163,8 @@ class World {
             this.spinImage(mo);
         }
         mo.draw(this.ctx);
-        mo.drawFrame(this.ctx);
+        /* mo.drawFrameItems(this.ctx) */
+        /* mo.drawFrame(this.ctx); */
 
         if (mo.otherDirection) {
             this.spinImageBack(mo);

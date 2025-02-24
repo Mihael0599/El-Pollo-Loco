@@ -7,7 +7,7 @@ class MovableObject extends DrawableObject {
     lastHit = 0;
     coinsCollected = 0;
     bottlesCollected = 0;
-    enemyHit = 0;
+    endBossEnergy = 100;
 
     applyGravity() {
         setInterval(() => {
@@ -36,6 +36,13 @@ class MovableObject extends DrawableObject {
             this.y + this.height > mo.y &&
             this.y < mo.y + mo.height;
     }
+
+    isCollidingItem(mo) {
+        return this.x + this.width - 80 > mo.x &&
+            this.x < mo.x + mo.width &&
+            this.y + this.height - 50 > mo.y &&
+            this.y < mo.y - 120 + mo.height;
+    }
     
     coinCollected() {
         this.coinsCollected += 20;
@@ -62,6 +69,10 @@ class MovableObject extends DrawableObject {
 
     isDead() {
         return this.energy == 0;
+    }
+    
+    isEndBossDead(){
+        return this.endBossEnergy == 0;
     }
 
     moverRight() {
