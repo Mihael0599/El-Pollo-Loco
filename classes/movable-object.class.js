@@ -67,6 +67,15 @@ class MovableObject extends DrawableObject {
         return timepassed < 0.5;
     }
 
+    isEnemyHit() {
+        this.endBossEnergy -= 34;
+    
+        if (this.endBossEnergy <= 0) {
+            this.endBossEnergy = 0;
+            this.showHealthBar = false;
+        }
+    }
+
     isDead() {
         return this.energy == 0;
     }
