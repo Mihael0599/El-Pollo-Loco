@@ -3,8 +3,9 @@ class MovableObject extends DrawableObject {
     otherDirection = false;
     speedY = 0;
     acceleration = 1;
-    energy = 5000;
+    energy = 10;
     lastHit = 0;
+    enemyLastHit = 0;
     coinsCollected = 0;
     bottlesCollected = 0;
     endBossEnergy = 100;
@@ -67,13 +68,20 @@ class MovableObject extends DrawableObject {
         return timepassed < 0.5;
     }
 
-    isEnemyHit() {
+    isEndbossHit() {
         this.endBossEnergy -= 34;
-    
-        if (this.endBossEnergy <= 0) {
+        if (this.endBossEnergy < 0) {
             this.endBossEnergy = 0;
-            this.showHealthBar = false;
+        } else {
+            this.enemyLastHit = new Date().getTime();
         }
+    }
+
+    isEndbossHurt() {
+        let timepassed = new Date().getTime() - this.enemyLastHit;
+        timepassed = timepassed / 1000;
+        console.log(timepassed);
+        return timepassed < 0.5;
     }
 
     isDead() {
@@ -92,7 +100,7 @@ class MovableObject extends DrawableObject {
         this.x -= this.speed
     }
 
-    playanimation(images) {
+    playAnimation(images) {
         let i = this.currentImage % images.length;
         let path = images[i];
         this.img = this.imageChace[path];

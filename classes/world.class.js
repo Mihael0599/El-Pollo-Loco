@@ -83,6 +83,7 @@ class World {
                 if (this.character.speedY < 0 && this.character.y + this.character.height < enemy.y + enemy.height / 2) {
                     enemy.isEnemyHit();
                     this.character.jump();
+                    console.log("object");
                     setTimeout(() => {
                         this.level.enemies.splice(index, 1);
                     }, 500);
@@ -117,10 +118,8 @@ class World {
         this.thowableObjects.forEach((bottle, bottleIndex) => {
             this.level.enemies.forEach((enemy, enemyIndex) => {
                 if (bottle.isColliding(enemy) && !enemy.dead) {
-                    enemy.isEnemyHit();
-                    setTimeout(() => {
-                        this.level.enemies.splice(enemyIndex, 1);
-                    }, 200);
+                    this.endBoss.isEndbossHit();
+                    this.statusBarEndboss.setPercentage(this.endBoss.endBossEnergy)
                     this.thowableObjects.splice(bottleIndex, 1);
                 }
             });

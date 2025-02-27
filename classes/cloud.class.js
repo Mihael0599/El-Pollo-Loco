@@ -23,7 +23,7 @@ class Cloud extends MovableObject{
     }, 1000 / 60);
 
     setInterval(() => {
-        /* this.playanimation(this.image_floating); */
+        /* this.playAnimation(this.image_floating); */
     }, 200);
     }
 }

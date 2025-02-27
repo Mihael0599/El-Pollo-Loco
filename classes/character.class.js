@@ -72,17 +72,14 @@ class Character extends MovableObject {
 
         setInterval(() => {
             if (this.isDead()) {
-                {
                 this.loadImage('img/2_character_pepe/5_dead/D-57.png');
-                }
             } else if (this.isHurt()) {
-                this.playanimation(this.images_hurt);
+                this.playAnimation(this.images_hurt);
             } else if (this.isAboveGround()) {
-                this.playanimation(this.images_jump);
+                this.playAnimation(this.images_jump);
             } else {
-
                 if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-                    this.playanimation(this.images_walking);
+                    this.playAnimation(this.images_walking);
                 }
             }
             if (this.world.keyboard.SPACE && !this.isAboveGround()) {
