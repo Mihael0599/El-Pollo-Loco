@@ -24,7 +24,7 @@ images_health_endboss = [
     setPercentage(percentage) {
         this.percentage = percentage;
         let path = this.images_health_endboss[this.resloveImageIndex()]
-        this.img = this.imageChace[path];
+        this.img = this.imageCache[path];
 
     }
 
