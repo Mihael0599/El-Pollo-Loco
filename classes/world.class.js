@@ -1,7 +1,7 @@
 class World {
     character = new Character();
     chicken = new Chicken();
-    endBoss = new Endboss();
+    endBoss;
     level = level1;
     canvas;
     ctx;
@@ -13,7 +13,7 @@ class World {
     statusBarEndboss = new StatusBarEndboss();
     coins = new Coins();
     bottles = new Bottles();
-    throwableObjects = [];
+    thowableObjects = [];
     bottleThrown = false;
 
 
@@ -28,12 +28,12 @@ class World {
 
     setWorld() {
         this.character.world = this;
-        this.endBoss.world = this;
     }
 
     run() {
         setInterval(() => {
             this.checkCollision();
+            this.checkCollisionBottom();
             this.checkCollisionCoin();
             this.checkCollisionBottle();
             this.checkBottleCollision();
@@ -51,7 +51,7 @@ class World {
     checkThrowObjects() {
         if (this.keyboard.D && !this.bottleThrown && this.character.bottlesCollected > 0) {
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
-            this.throwableObjects.push(bottle);
+            this.thowableObjects.push(bottle);
             this.character.bottlesCollected -= 20;
             this.statusBarBottel.setPercentage(this.character.bottlesCollected);
         }
@@ -61,35 +61,40 @@ class World {
     }
     checkCollision() {
         this.level.enemies.forEach((enemy, index) => {
-          if (this.character.isColliding(enemy)) {
-            let stomped = false;
-            let delay = 200;
-      
-            // Bedingung 1: Charakter fällt (speedY <= 0) und der Abstand zwischen Charakter-Boden und Gegner-Oberseite ist gering (< 30)
-            if (this.character.speedY <= 0 && (this.character.y + this.character.height - enemy.y) < 30) {
-              stomped = true;
-              delay = 200;
+            if (this.character.isColliding(enemy)) {
+                if (this.character.speedY <= 0 && (this.character.y + this.character.height - enemy.y) < 30) {
+                    enemy.isEnemyHit();
+                    this.character.jump();
+                    setTimeout(() => {
+                        this.level.enemies.splice(index, 1);
+                    }, 200);
+                } else {
+                    if (!enemy.dead) {
+                        this.character.isHit();
+                        this.statusBar.setPercentage(this.character.energy);
+                    }
+                }
             }
-            // Bedingung 2: Alternativ, falls der Charakter fällt und sein Boden unterhalb eines bestimmten Punktes des Gegners liegt
-            else if (this.character.speedY < 0 && this.character.y + this.character.height < enemy.y + enemy.height / 2) {
-              stomped = true;
-              delay = 500;
-            }
-      
-            if (stomped) {
-              enemy.isEnemyHit();
-              this.character.jump();
-              setTimeout(() => {
-                this.level.enemies.splice(index, 1);
-              }, delay);
-            } else if (!enemy.dead) {
-              this.character.isHit();
-              this.statusBar.setPercentage(this.character.energy);
-            }
-          }
         });
-      }
-      
+    }
+
+    checkCollisionBottom() {
+        this.level.enemies.forEach((enemy, index) => {
+            if (this.character.isColliding(enemy)) {
+                if (this.character.speedY < 0 && this.character.y + this.character.height < enemy.y + enemy.height / 2) {
+                    enemy.isEnemyHit();
+                    this.character.jump();
+                    console.log("object");
+                    setTimeout(() => {
+                        this.level.enemies.splice(index, 1);
+                    }, 500);
+                } else {
+                    this.checkCollision();
+                }
+            }
+        });
+    }
+
     checkCollisionCoin() {
         this.level.coins.forEach((coin, index) => {
             if (this.character.isCollidingItem(coin)) {
@@ -110,18 +115,22 @@ class World {
         });
     }
 
-    checkBottleCollision() {
-        this.throwableObjects.forEach((bottle, bottleIndex) => {
-            this.level.enemies.forEach((enemy, enemyIndex) => {
-                if (bottle.isColliding(enemy) && !enemy.dead) {
-                    this.endBoss.isEndbossHit();
+checkBottleCollision() {
+    this.thowableObjects.forEach((bottle, bottleIndex) => {
+        this.level.enemies.forEach((enemy, enemyIndex) => {
+            if (bottle.isColliding(enemy) && !enemy.dead) {
+                if (enemy instanceof Chicken) {
                     enemy.isEnemyHit();
-                    this.statusBarEndboss.setPercentage(this.endBoss.endBossEnergy)
-                    this.throwableObjects.splice(bottleIndex, 1);
                 }
-            });
+                if (enemy instanceof Endboss) {
+                    enemy.isEndbossHit();
+                    this.statusBarEndboss.setPercentage(enemy.endBossEnergy);
+                }
+                this.thowableObjects.splice(bottleIndex, 1);
+            }
         });
-    }
+    });
+}
 
 
     draw() {
@@ -129,13 +138,13 @@ class World {
 
         this.ctx.translate(this.camera_x, 0);
         this.addObjectsToMap(this.level.backgorund);
-        this.addObjectsToMap(this.throwableObjects);
+        this.addObjectsToMap(this.thowableObjects);
         this.addObjectsToMap(this.level.clouds);
         this.ctx.translate(-this.camera_x, 0);
         this.addToMap(this.statusBar);
         this.addToMap(this.statusBarCoins);
         this.addToMap(this.statusBarBottel);
-        if (this.endBoss.showHealthBar) {
+        if (this.character.x > 1500) {
             this.addToMap(this.statusBarEndboss);
         }
         this.ctx.translate(this.camera_x, 0);
