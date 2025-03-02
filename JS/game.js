@@ -1,10 +1,31 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
+let intro = document.getElementById("intro");
 
-function init() {
+function startGame() {
     canvas = document.getElementById("canvas");
+    intro = document.getElementById("intro");
+    intro.style.display = "none";
+    canvas.style.display = "block";
+    initLevel();
     world = new World(canvas, keyboard);
+}
+
+function toggleFullscreen() {
+    fullscreen = document.getElementById("body");
+    if (fullscreen.requestFullscreen) {
+        fullscreen.requestFullscreen();
+    }else if(fullscreen.webkitRequestFullscreen){
+        fullscreen.webkitRequestFullscreen();
+    }else if(fullscreen.msRequestFullscreen){
+        fullscreen.msRequestFullscreen();
+    }
+}
+
+function toggleMute() {
+    volume = document.getElementById("volume");
+    volume.src = 'img/10_controls/mute.png';
 }
 
 document.addEventListener("keydown", (e) => {

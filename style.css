@@ -13,21 +13,116 @@ body {
     font-family: 'zabras', Arial, Helvetica, sans-serif;
 }
 
-img {
-    width: 720px;
-    height: 480px;
-    top: -50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 h1 {
     font-size: 64px;
     color: #D3833A;
     margin-block-start: 0;
     margin-block-end: 0;
     letter-spacing: 5px;
+}
+
+.start-screen {
+    height: 480px;
+    width: 720px;
+    background-image: url("./img/9_intro_outro_screens/start/startscreen_1.png");
+    background-position: center;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+}
+
+canvas {
+    display: none;
+}
+
+.start-button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 40px;
+    padding-left: 40px;
+    padding-top: 20px;
+}
+
+.fullscreen-img {
+    height: 50px;
+    width: 50px;
+}
+
+.fullscreen-img:hover {
+    cursor: pointer;
+}
+
+.volume-img{
+    height: 50px;
+    width: 50px;
+}
+
+.volume-img:hover{
+    cursor: pointer;
+}
+
+.fullscreen-volume-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 40px;
+}
+
+.start-btn {
+    margin: 0;
+    color: white;
+    font-family: 'zabras', Arial, Helvetica, sans-serif;
+    font-size: 32px;
+    letter-spacing: 2px;
+    background-color: #D3833A;
+    border: none;
+    height: 50px;
+    width: 90px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.start-btn:hover {
+    background-color: #FFDD02;
+}
+
+.controls {
+    padding-left: 20px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    padding-bottom: 20px;
+}
+
+p {
+    font-size: 32px;
+    margin: 0;
+}
+
+.arrow-img {
+    height: 30px;
+    width: 30px;
+    margin: 0;
+}
+
+.space-img {
+    height: 40px;
+    width: 50px;
+}
+
+.gameover {
+    background-image: url('img/9_intro_outro_screens/game_over/game over.png');
+    height: 480px;
+    width: 720px;
+    display: none;
+    background-position: center;
+    background-size: cover;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 @font-face {
@@ -39,21 +134,22 @@ h1 {
     canvas {
         width: 100%;
     }
+
+    .start-screen {
+        width: 100vw;
+    }
 }
 
 @media only screen and (max-height: 480px) {
     canvas {
         height: 100vh;
     }
+
+    .start-screen {
+        height: 100vh;
+    }
+
     h1 {
         display: none;
     }
-}
-
-/* .game-over{
-    position: absolute;
-    top: calc(50% - 202px);
-} */
-canvas{
-    display: block;
 }

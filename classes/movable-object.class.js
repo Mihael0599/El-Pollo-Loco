@@ -79,7 +79,6 @@ class MovableObject extends DrawableObject {
 
     isEndbossHurt() {
         let timepassed = new Date().getTime() - this.enemyLastHit;
-        console.log(timepassed);
         timepassed = timepassed / 1000;
         return timepassed < 2;
     }

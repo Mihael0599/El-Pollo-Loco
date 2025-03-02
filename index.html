@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" translate="no" class="translate">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google" content="notranslate" />
     <title>El Pollo Loco</title>
     <link rel="stylesheet" href="./style.css">
     <link rel="icon" type="image/x-icon" href="./img/cactus-8405150_640.png">
@@ -27,10 +29,31 @@
     <script src="./Levels/level1.js"></script>
     <script src="./JS/game.js"></script>
 </head>
-<body onload="init()">
-        <h1>El Pollo Loco</h1>
-    <div>
-        <canvas id="canvas" width="720px" height="480px"></canvas>
+
+<body id="body">
+    <h1>El Pollo Loco</h1>
+    <canvas id="canvas" width="720px" height="480px"></canvas>
+    <div class="start-screen" id="intro">
+        <div class="start-button-container">
+            <button class="start-btn" onclick="startGame()">Start</button>
+            <div class="fullscreen-volume-container">
+                <img onclick="toggleMute()" id="volume" class="volume-img" src="./img/10_controls/volume.png" alt="">
+                <img onclick="toggleFullscreen()" class="fullscreen-img" src="./img/10_controls/fullscreen.png" alt="">
+            </div>
+        </div>
+        <div class="controls">
+            <p>Move Left and Right</p>
+            <img class="arrow-img" src="./img/10_controls/arrow_left.png" alt="">
+            <img class="arrow-img" src="./img/10_controls/arrow_right.png" alt="">
+            <p>Jump</p>
+            <img class="space-img" src="./img/10_controls/space.png" alt="">
+            <p>Throw Bottle</p>
+            <p>D</p>
+        </div>
+    </div>
+    <div class="gameover" id="gameover">
+
     </div>
 </body>
+
 </html>

@@ -20,7 +20,7 @@ class World {
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
-        this.keyboard = keyboard
+        this.keyboard = keyboard;
         this.draw();
         this.setWorld();
         this.run();
@@ -132,6 +132,10 @@ checkBottleCollision() {
     });
 }
 
+gameover(){
+    clearInterval(this.run);
+    showGameOver();
+}
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.height, this.canvas.width);
