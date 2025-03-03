@@ -15,6 +15,9 @@ class World {
     bottles = new Bottles();
     thowableObjects = [];
     bottleThrown = false;
+    coinCollectedAudio = new Audio('audio/coin-recieved-230517.mp3');
+    bottleCollectedAudio = new Audio('audio/bottle_collected.mp3');
+    charackterHitAudio = new Audio ('audio/charackter_hurt.mp3');
 
 
     constructor(canvas, keyboard) {
@@ -64,6 +67,7 @@ class World {
             if (this.character.isColliding(enemy)) {
                 if (this.character.speedY <= 0 && (this.character.y + this.character.height - enemy.y) < 30) {
                     enemy.isEnemyHit();
+                    this.enemyHitAudio.play();
                     this.character.jump();
                     setTimeout(() => {
                         this.level.enemies.splice(index, 1);
@@ -71,6 +75,7 @@ class World {
                 } else {
                     if (!enemy.dead) {
                         this.character.isHit();
+                        this.charackterHitAudio.play();
                         this.statusBar.setPercentage(this.character.energy);
                     }
                 }
@@ -101,6 +106,7 @@ class World {
                 this.character.coinCollected();
                 this.statusBarCoins.setPercentage(this.character.coinsCollected);
                 this.level.coins.splice(index, 1);
+                this.coinCollectedAudio.play();
             }
         });
     }
@@ -111,6 +117,7 @@ class World {
                 this.character.bottleCollected();
                 this.statusBarBottel.setPercentage(this.character.bottlesCollected);
                 this.level.bottles.splice(index, 1);
+                this.bottleCollectedAudio.play();
             }
         });
     }
@@ -121,9 +128,11 @@ checkBottleCollision() {
             if (bottle.isColliding(enemy) && !enemy.dead) {
                 if (enemy instanceof Chicken) {
                     enemy.isEnemyHit();
+                    this.enemyHitAudio.play();
                 }
                 if (enemy instanceof Endboss) {
                     enemy.isEndbossHit();
+                    this.enemyHitAudio.play();
                     this.statusBarEndboss.setPercentage(enemy.endBossEnergy);
                 }
                 this.thowableObjects.splice(bottleIndex, 1);

@@ -91,7 +91,7 @@ class MovableObject extends DrawableObject {
         return this.endBossEnergy == 0;
     }
 
-    moverRight() {
+    moveRight() {
         this.x += this.speed
     }
 

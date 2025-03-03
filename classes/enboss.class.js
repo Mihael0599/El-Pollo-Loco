@@ -2,6 +2,7 @@ class Endboss extends MovableObject {
     height = 350;
     width = 300;
     wasEncountered = false;
+    gameoverAudio = new Audio ('audio/game-over-arcade-6435.mp3');
 
     images_walking = [ 
         'img/4_enemie_boss_chicken/1_walk/G1.png',
@@ -57,6 +58,7 @@ class Endboss extends MovableObject {
                     this.playAnimation(this.images_hurt);
                 }else if(this.isEndBossDead()){
                     this.playAnimation(this.images_dead);
+                    this.gameoverAudio.play();
                 }
         }, 200);
         

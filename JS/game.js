@@ -2,6 +2,7 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 let intro = document.getElementById("intro");
+let volumeState = 1;
 
 function startGame() {
     canvas = document.getElementById("canvas");
@@ -25,7 +26,18 @@ function toggleFullscreen() {
 
 function toggleMute() {
     volume = document.getElementById("volume");
-    volume.src = 'img/10_controls/mute.png';
+
+    switch (volumeState) {
+        case 1:
+            volume.src = 'img/10_controls/mute.png';
+            volumeState = 2;
+            break;
+    
+        case 2:
+            volume.src = 'img/10_controls/volume.png';
+            volumeState = 1;
+            break;
+    }
 }
 
 document.addEventListener("keydown", (e) => {
