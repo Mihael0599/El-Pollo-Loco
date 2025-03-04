@@ -3,11 +3,15 @@ let world;
 let keyboard = new Keyboard();
 let intro = document.getElementById("intro");
 let volumeState = 1;
+let gameoverScreen = document.getElementById("gameover");
+let winScreen = document.getElementById("winScreen")
 
 function startGame() {
     canvas = document.getElementById("canvas");
     intro = document.getElementById("intro");
     intro.style.display = "none";
+    gameoverScreen.style.display = "none";
+    winScreen.style.display = "none";
     canvas.style.display = "block";
     initLevel();
     world = new World(canvas, keyboard);
@@ -39,6 +43,22 @@ function toggleMute() {
             break;
     }
 }
+
+function gameover() {
+    gameoverScreen.style.display = "flex";
+    canvas.style.display = "none";
+    clearAllIntervals();
+}
+
+function playerWon() {
+    winScreen.style.display = "flex";
+    canvas.style.display = "none";
+    clearAllIntervals();
+}
+
+function clearAllIntervals() {
+    for (let i = 1; i < 9999; i++) window.clearInterval(i);
+  }
 
 document.addEventListener("keydown", (e) => {
     if (e.keyCode == 39) {

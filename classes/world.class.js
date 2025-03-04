@@ -67,7 +67,7 @@ class World {
             if (this.character.isColliding(enemy)) {
                 if (this.character.speedY <= 0 && (this.character.y + this.character.height - enemy.y) < 30) {
                     enemy.isEnemyHit();
-                    this.enemyHitAudio.play();
+/*                     this.enemyHitAudio.play(); */
                     this.character.jump();
                     setTimeout(() => {
                         this.level.enemies.splice(index, 1);
@@ -89,7 +89,6 @@ class World {
                 if (this.character.speedY < 0 && this.character.y + this.character.height < enemy.y + enemy.height / 2) {
                     enemy.isEnemyHit();
                     this.character.jump();
-                    console.log("object");
                     setTimeout(() => {
                         this.level.enemies.splice(index, 1);
                     }, 500);
@@ -128,11 +127,11 @@ checkBottleCollision() {
             if (bottle.isColliding(enemy) && !enemy.dead) {
                 if (enemy instanceof Chicken) {
                     enemy.isEnemyHit();
-                    this.enemyHitAudio.play();
+                    /* this.enemyHitAudio.play(); */
                 }
                 if (enemy instanceof Endboss) {
                     enemy.isEndbossHit();
-                    this.enemyHitAudio.play();
+                    /* this.enemyHitAudio.play(); */
                     this.statusBarEndboss.setPercentage(enemy.endBossEnergy);
                 }
                 this.thowableObjects.splice(bottleIndex, 1);

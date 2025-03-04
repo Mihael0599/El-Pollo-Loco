@@ -4,6 +4,7 @@ class Character extends MovableObject {
     speed = 8;
     moveSound = new Audio('audio/walking.mp3');
     jumpSound = new Audio('audio/retro-jump-3-236683.mp3');
+    lastMove = 0;
 
     images_walking = [
         'img/2_character_pepe/2_walk/W-21.png',
@@ -79,11 +80,13 @@ class Character extends MovableObject {
                 this.otherDirection = false;
                 this.moveRight();
                 this.moveSound.play();
+                this.isPepeMoving();
             }
             if (this.world.keyboard.LEFT && this.x > -600) {
                 this.otherDirection = true;
                 this.moveLeft();
                 this.moveSound.play();
+                this.isPepeMoving();
             }
             this.world.camera_x = -this.x + 100;
         }, 1000 / 60);
@@ -91,6 +94,7 @@ class Character extends MovableObject {
         setInterval(() => {
             if (this.isDead()) {
                 this.loadImage('img/2_character_pepe/5_dead/D-57.png');
+                gameover();
             } else if (this.isHurt()) {
                 this.playAnimation(this.images_hurt);
             } else if (this.isAboveGround()) {
@@ -101,7 +105,22 @@ class Character extends MovableObject {
             if (this.world.keyboard.SPACE && !this.isAboveGround()) {
                 this.jump();
                 this.jumpSound.play();
+                this.isPepeMoving();
+            }
+
+            if (this.pepeIsSleeping()) {
+                this.playAnimation(this.images_sleep);
             }
         }, 100);
+    }
+
+    isPepeMoving(){
+        this.lastMove = new Date().getTime();
+    }
+
+    pepeIsSleeping(){
+        let timepassed = new Date().getTime() - this.lastMove;
+        timepassed = timepassed / 1000;
+        return timepassed > 10 && timepassed < 3600;
     }
 }

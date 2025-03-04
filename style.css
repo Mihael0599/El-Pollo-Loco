@@ -115,14 +115,43 @@ p {
 }
 
 .gameover {
-    background-image: url('img/9_intro_outro_screens/game_over/game over.png');
+    background-image: url('img/9_intro_outro_screens/game_over/lose.png');
     height: 480px;
     width: 720px;
     display: none;
     background-position: center;
     background-size: cover;
-    flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.win-screen{
+    background-image: url('img/9_intro_outro_screens/game_over/gameover.png');
+    height: 480px;
+    width: 720px;
+    display: none;
+    background-position: center;
+    background-size: cover;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.restart-btn{
+    margin: 0;
+    color: white;
+    font-family: 'zabras', Arial, Helvetica, sans-serif;
+    font-size: 32px;
+    letter-spacing: 2px;
+    background-color: #D3833A;
+    border: none;
+    height: 70px;
+    width: 150px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.btn-container{
+    padding-bottom: 60px;
 }
 
 @font-face {

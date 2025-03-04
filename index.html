@@ -27,7 +27,6 @@
     <script src="./classes/level.class.js"></script>
     <script src="./classes/throwable-object.class.js"></script>
     <script src="./Levels/level1.js"></script>
-    <script src="./JS/game.js"></script>
 </head>
 
 <body id="body">
@@ -52,8 +51,17 @@
         </div>
     </div>
     <div class="gameover" id="gameover">
+        <div class="btn-container">
+            <button class="restart-btn" onclick="startGame()">Play again</button>
+        </div>
+    </div>
+    <div class="win-screen" id="winScreen">
+        <div class="btn-container">
+            <button class="restart-btn" onclick="startGame()">Play again</button>
+        </div>
 
     </div>
 </body>
+<script src="./JS/game.js"></script>
 
 </html>
