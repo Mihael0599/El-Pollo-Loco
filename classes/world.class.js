@@ -33,65 +33,54 @@ class World {
 
     run() {
         setInterval(() => {
-            this.checkCollision();
-            this.checkCollisionBottom();
-            this.checkCollisionCoin();
-            this.checkCollisionBottle();
-            this.checkBottleCollision();
-        }, 10);
+            this.checkCollisions();
+        }, 10)
+
         setInterval(() => {
             this.checkThrowObjects();
-            if (this.character.isDead()) {
-                this.level.enemies = [];
-                this.level.coins = [];
-                this.level.bottles = [];
-            }
         }, 100);
     }
 
     checkThrowObjects() {
+        this.checkThrowObjects();
+    }
+
+    checkCollisions() {
+        this.checkCollision();
+        this.checkCollisionCoin();
+        this.checkCollisionBottle();
+        this.checkBottleCollision();
+    }
+    checkThrowObjects() {
         if (this.keyboard.D && !this.bottleThrown && this.character.bottlesCollected > 0) {
-            let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
+            let bottle = new ThrowableObject(this.character.x + 40, this.character.y + 100, this.character.otherDirection);
             this.thowableObjects.push(bottle);
             this.character.bottlesCollected -= 20;
             this.statusBarBottel.setPercentage(this.character.bottlesCollected);
+            this.bottleThrown = true;
         }
         if (!this.keyboard.D) {
             this.bottleThrown = false;
         }
     }
+
     checkCollision() {
         this.level.enemies.forEach((enemy, index) => {
             if (this.character.isColliding(enemy)) {
-                if (this.character.speedY <= 0 && (this.character.y + this.character.height - enemy.y) < 30) {
+                let isAttackingFromAbove =
+                    this.character.speedY < 0 &&
+                    this.character.y + this.character.height < enemy.y + enemy.height / 2;
+
+                if (isAttackingFromAbove) {
                     enemy.isEnemyHit();
-                    /*                     this.enemyHitAudio.play(); */
                     this.character.jump();
                     setTimeout(() => {
                         this.level.enemies.splice(index, 1);
                     }, 200);
-                } else {
-                    if (!enemy.dead) {
-                        this.character.isHit();
-                        this.charackterHitAudio.play();
-                        this.statusBar.setPercentage(this.character.energy);
-                    }
-                }
-            }
-        });
-    }
-
-    checkCollisionBottom() {
-        this.level.enemies.forEach((enemy, index) => {
-            if (this.character.isColliding(enemy)) {
-                if (this.character.speedY < 0 && this.character.y + this.character.height < enemy.y + enemy.height / 2) {
-                    enemy.isEnemyHit();
-                    this.character.jump();
-                    setTimeout(() => {
-                        this.level.enemies.splice(index, 1);
-                    }, 500);
-                } else {
-                    this.checkCollision();
+                } else if (!enemy.dead) {
+                    this.character.isHit();
+                    this.charackterHitAudio.play();
+                    this.statusBar.setPercentage(this.character.energy);
                 }
             }
         });
@@ -147,27 +136,38 @@ class World {
         this.ctx.clearRect(0, 0, this.canvas.height, this.canvas.width);
 
         this.ctx.translate(this.camera_x, 0);
+        this.addObjects();
+        this.ctx.translate(-this.camera_x, 0);
+
+        this.addStatusBarsToMap();
+        
+        this.ctx.translate(this.camera_x, 0);
+
+        this.addToMap(this.character);
+
+        this.ctx.translate(-this.camera_x, 0);
+        let self = this;
+        requestAnimationFrame(function () {
+            self.draw();
+        });
+    }
+
+    addObjects() {
         this.addObjectsToMap(this.level.backgorund);
         this.addObjectsToMap(this.thowableObjects);
         this.addObjectsToMap(this.level.clouds);
-        this.ctx.translate(-this.camera_x, 0);
+        this.addObjectsToMap(this.level.enemies);
+        this.addObjectsToMap(this.level.coins);
+        this.addObjectsToMap(this.level.bottles);
+    }
+
+    addStatusBarsToMap() {
         this.addToMap(this.statusBar);
         this.addToMap(this.statusBarCoins);
         this.addToMap(this.statusBarBottel);
         if (this.character.x > 1500) {
             this.addToMap(this.statusBarEndboss);
         }
-        this.ctx.translate(this.camera_x, 0);
-
-        this.addToMap(this.character);
-        this.addObjectsToMap(this.level.enemies);
-        this.addObjectsToMap(this.level.coins);
-        this.addObjectsToMap(this.level.bottles);
-        this.ctx.translate(-this.camera_x, 0);
-        let self = this;
-        requestAnimationFrame(function () {
-            self.draw();
-        });
     }
 
     addObjectsToMap(objects) {
@@ -181,7 +181,7 @@ class World {
             this.spinImage(mo);
         }
         mo.draw(this.ctx);
-        /* mo.drawFrameItems(this.ctx) */
+        mo.drawFrameItems(this.ctx)
         /* mo.drawFrame(this.ctx); */
 
         if (mo.otherDirection) {

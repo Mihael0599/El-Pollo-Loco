@@ -84,6 +84,7 @@ class Character extends MovableObject {
         } else if (this.characterIsSleeping()) {
             this.playAnimation(this.images_sleep);
         }
+        this.isCharacterDead();
     }
 
     charachterMoving() {
