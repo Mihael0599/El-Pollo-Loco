@@ -3,7 +3,7 @@ class MovableObject extends DrawableObject {
     otherDirection = false;
     speedY = 0;
     acceleration = 1;
-    energy = 5000;
+    energy = 100;
     lastHit = 0;
     enemyLastHit = 0;
     coinsCollected = 0;
@@ -15,8 +15,6 @@ class MovableObject extends DrawableObject {
             if (this.isAboveGround() || this.speedY > 0) {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
-            } else {
-                /* this.loadImage('img/2_character_pepe/1_idle/idle/I-1.png'); */ //Muss noch angepasst werden
             }
         }, 1000 / 50);
     }
@@ -54,7 +52,7 @@ class MovableObject extends DrawableObject {
     }
 
     isHit() {
-        this.energy -= 10;
+        this.energy -= 5;
         if (this.energy < 0) {
             this.energy = 0;
         } else {

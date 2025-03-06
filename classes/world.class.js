@@ -1,6 +1,5 @@
 class World {
     character = new Character();
-    chicken = new Chicken();
     endBoss;
     level = level1;
     canvas;
@@ -17,8 +16,7 @@ class World {
     bottleThrown = false;
     coinCollectedAudio = new Audio('audio/coin-recieved-230517.mp3');
     bottleCollectedAudio = new Audio('audio/bottle_collected.mp3');
-    charackterHitAudio = new Audio ('audio/charackter_hurt.mp3');
-
+    charackterHitAudio = new Audio('audio/charackter_hurt.mp3');
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -67,7 +65,7 @@ class World {
             if (this.character.isColliding(enemy)) {
                 if (this.character.speedY <= 0 && (this.character.y + this.character.height - enemy.y) < 30) {
                     enemy.isEnemyHit();
-/*                     this.enemyHitAudio.play(); */
+                    /*                     this.enemyHitAudio.play(); */
                     this.character.jump();
                     setTimeout(() => {
                         this.level.enemies.splice(index, 1);
@@ -121,29 +119,29 @@ class World {
         });
     }
 
-checkBottleCollision() {
-    this.thowableObjects.forEach((bottle, bottleIndex) => {
-        this.level.enemies.forEach((enemy, enemyIndex) => {
-            if (bottle.isColliding(enemy) && !enemy.dead) {
-                if (enemy instanceof Chicken) {
-                    enemy.isEnemyHit();
-                    /* this.enemyHitAudio.play(); */
+    checkBottleCollision() {
+        this.thowableObjects.forEach((bottle, bottleIndex) => {
+            this.level.enemies.forEach((enemy, enemyIndex) => {
+                if (bottle.isColliding(enemy) && !enemy.dead) {
+                    if (enemy instanceof Chicken) {
+                        enemy.isEnemyHit();
+                        /* this.enemyHitAudio.play(); */
+                    }
+                    if (enemy instanceof Endboss) {
+                        enemy.isEndbossHit();
+                        /* this.enemyHitAudio.play(); */
+                        this.statusBarEndboss.setPercentage(enemy.endBossEnergy);
+                    }
+                    this.thowableObjects.splice(bottleIndex, 1);
                 }
-                if (enemy instanceof Endboss) {
-                    enemy.isEndbossHit();
-                    /* this.enemyHitAudio.play(); */
-                    this.statusBarEndboss.setPercentage(enemy.endBossEnergy);
-                }
-                this.thowableObjects.splice(bottleIndex, 1);
-            }
+            });
         });
-    });
-}
+    }
 
-gameover(){
-    clearInterval(this.run);
-    showGameOver();
-}
+    gameover() {
+        clearInterval(this.run);
+        showGameOver();
+    }
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.height, this.canvas.width);
