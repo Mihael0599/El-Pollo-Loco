@@ -35,11 +35,11 @@ class World {
     run() {
         setInterval(() => {
             this.checkCollisions();
-        }, 30)
+        }, 10)
 
         setInterval(() => {
             this.checkThrowObjects();
-        }, 30);
+        }, 50);
     }
 
     checkThrowObjects() {
@@ -67,10 +67,10 @@ class World {
 
     checkCollision() {
         this.level.enemies.forEach((enemy, index) => {
-            if (this.character.isColliding(enemy) && this.character.isAboveGround()) {
+            if (this.character.isColliding(enemy, index) && this.character.isAboveGround()) {
                 enemy.isEnemyHit();
                 this.playEnemyHitAudio();
-                this.removeEnemyFromWorld(index);
+                this.removeEnemyFromWorld(enemy);
                 this.character.jump();
             } else if (!enemy.dead && this.character.isColliding(enemy)) {
                 this.character.isHit();
@@ -108,9 +108,9 @@ class World {
         this.thowableObjects.forEach((bottle, bottleIndex) => {
             this.level.enemies.forEach((enemy, index) => {
                 if (bottle.isColliding(enemy) && !enemy.dead) {
-                    if (enemy instanceof Chicken && enemy instanceof ChickenSmall) {
+                    if (enemy instanceof Chicken || enemy instanceof ChickenSmall) {
                         enemy.isEnemyHit();
-                        this.removeEnemyFromWorld(index)
+                        this.removeEnemyFromWorld(enemy)
                         this.playEnemyHitAudio();
                     }
                     if (enemy instanceof Endboss) {
@@ -129,9 +129,9 @@ class World {
         showGameOver();
     }
 
-    removeEnemyFromWorld(index) {
+    removeEnemyFromWorld(enemyToRemove) {
         setTimeout(() => {
-            this.level.enemies.splice(index, 1);
+            this.level.enemies = this.level.enemies.filter(enemy => enemy !== enemyToRemove);
         }, 200);
     }
 
@@ -163,7 +163,7 @@ class World {
         this.addToMap(this.statusBar);
         this.addToMap(this.statusBarCoins);
         this.addToMap(this.statusBarBottel);
-        if (this.endBoss.wasEncountered) {
+        if (this.endBoss.showHealthBar) {
             this.addToMap(this.statusBarEndboss);
         }
     }

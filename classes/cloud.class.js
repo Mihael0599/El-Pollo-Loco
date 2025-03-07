@@ -1,6 +1,6 @@
 class Cloud extends MovableObject{
-    x = Math.random() * 1200;
-    y = 20;
+    x = Math.random() * 3000;
+    y = Math.random() * 100;
     width = 720;
 
     image_floating = [
@@ -13,7 +13,6 @@ class Cloud extends MovableObject{
         this.loadImages(this.image_floating);
         this.speed = 0.2;
         this.animate();
-        /* this.moveLeft(); */
     }
 
     animate(){
@@ -21,9 +20,5 @@ class Cloud extends MovableObject{
     setInterval(() => {
         this.x -= this.speed;
     }, 1000 / 60);
-
-    setInterval(() => {
-        /* this.playAnimation(this.image_floating); */
-    }, 200);
     }
 }
