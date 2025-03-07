@@ -3,12 +3,19 @@ class MovableObject extends DrawableObject {
     otherDirection = false;
     speedY = 0;
     acceleration = 1;
-    energy = 100;
+    energy = 5000;
     lastHit = 0;
     enemyLastHit = 0;
     coinsCollected = 0;
     bottlesCollected = 0;
     endBossEnergy = 100;
+
+    offset = {
+        top: 0,
+        left:  0,
+        right: 0,
+        bottom: 0
+    };
 
     applyGravity() {
         setInterval(() => {
@@ -30,17 +37,10 @@ class MovableObject extends DrawableObject {
 
 
     isColliding(mo) {
-        return this.x + this.width > mo.x &&
-            this.x < mo.x + mo.width &&
-            this.y + this.height > mo.y &&
-            this.y < mo.y + mo.height;
-    }
-
-    isCollidingItem(mo) {
-        return this.x + this.width - 80 > mo.x &&
-            this.x < mo.x + mo.width &&
-            this.y + this.height - 50 > mo.y &&
-            this.y < mo.y - 120 + mo.height;
+        return this.x + this.width - this.offset.right > mo.x &&
+            this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&
+            this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
+            this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom;
     }
     
     coinCollected() {

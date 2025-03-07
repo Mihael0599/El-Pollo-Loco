@@ -3,6 +3,7 @@ class Character extends MovableObject {
     speed = 8;
     moveSound = new Audio('audio/walking.mp3');
     jumpSound = new Audio('audio/retro-jump-3-236683.mp3');
+    deadSound = new Audio ('audio/080047_lose_funny_retro_video-game-80925.mp3');
     lastMove = 0;
 
     images_walking = [
@@ -55,6 +56,13 @@ class Character extends MovableObject {
         'img/2_character_pepe/1_idle/long_idle/I-20.png',
     ];
 
+    offset = {
+        top: 85,
+        bottom: 10,
+        left: 30,
+        right: 35
+    };
+
     constructor() {
         super().loadImage('img/2_character_pepe/2_walk/W-21.png');
         this.loadImages(this.images_walking);
@@ -102,6 +110,7 @@ class Character extends MovableObject {
 
     isCharacterDead() {
         if (this.isDead()) {
+            this.deadSound.play();
             gameover();
         }
     }
@@ -130,6 +139,7 @@ class Character extends MovableObject {
 
     characterJump() {
         this.jump();
+        this.jumpSound.volume = soundVolume
         this.jumpSound.play();
         this.isCharacterMoving();
     }
@@ -138,6 +148,7 @@ class Character extends MovableObject {
         if (this.canMoveLeft()) {
             this.otherDirection = true;
             this.moveLeft();
+            this.moveSound.volume = soundVolume
             this.moveSound.play();
             this.isCharacterMoving();
         }
@@ -147,6 +158,7 @@ class Character extends MovableObject {
         if (this.canMoveRight()) {
             this.otherDirection = false;
             this.moveRight();
+            this.moveSound.volume = soundVolume
             this.moveSound.play();
             this.isCharacterMoving();
         }

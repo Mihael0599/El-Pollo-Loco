@@ -1,8 +1,9 @@
 class Endboss extends MovableObject {
     height = 350;
     width = 300;
-    wasEncountered = false;
     gameoverAudio = new Audio('audio/game-over-arcade-6435.mp3');
+    showHealthBar = false;
+    wasEncountered = false;
 
     images_walking = [
         'img/4_enemie_boss_chicken/1_walk/G1.png',
@@ -32,6 +33,14 @@ class Endboss extends MovableObject {
         'img/4_enemie_boss_chicken/5_dead/G25.png',
         'img/4_enemie_boss_chicken/5_dead/G26.png',
     ];
+
+    offset = {
+        top: 50,
+        bottom: 20,
+        left: 30,
+        right: 10
+    };
+
     constructor() {
         super().loadImage('img/4_enemie_boss_chicken/1_walk/G1.png');
         this.loadImages(this.images_walking);
@@ -40,17 +49,17 @@ class Endboss extends MovableObject {
         this.loadImages(this.images_dead);
         this.speed = Math.random();
         this.animate();
-        this.x = 2000;
+        this.x = 2500;
         this.y = 90;
     }
 
     animate() {
-        setInterval(() => this.endBossMoving(), 1000 / 30);
+        setInterval(() => this.endBossMoving(), 1000 / 60);
         setInterval(() => this.playEndbossAnimation(), 200);
     }
 
     playEndbossAnimation() {
-        if (!this.isEndBossDead() && !this.isEndbossHurt()) {
+        if (!this.isEndBossDead() && !this.isEndbossHurt() && !this.wasEncountered) {
             this.playAnimation(this.images_walking);
         } else if (this.isEndbossHurt() && !this.isEndBossDead()) {
             this.playAnimation(this.images_hurt);
@@ -58,6 +67,8 @@ class Endboss extends MovableObject {
             this.playAnimation(this.images_dead);
             playerWon();
             this.gameoverAudio.play();
+        }else if(this.wasEncountered){
+            this.playAnimation(this.images_attack);
         }
     }
 
@@ -65,9 +76,26 @@ class Endboss extends MovableObject {
         if (this.canEndbossMove()) {
             this.x -= this.speed;
         }
+        this.checkCharacterDistance();
+    }
+
+    showStatusBar(){
+       return this.showHealthBar;
+    }
+
+    checkCharacterDistance() {
+        let character = world.character;
+        let distance = Math.abs(character.x - this.x);
+        if (distance < 300) {
+            this.wasEncountered = true;
+            this.showHealthBar = true;
+        } else if(distance > 300){
+            this.wasEncountered = false;
+        }
     }
 
     canEndbossMove() {
         return !this.isEndBossDead();
     }
+
 }

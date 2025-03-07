@@ -41,13 +41,42 @@ class DrawableObject {
         }
     }
 
-    drawFrameItems(ctx){
-        if (this instanceof Bottles || this instanceof Coins || this instanceof Endboss) {
+/*     drawFrameItems(ctx){
+        if (this instanceof Character) {
             ctx.beginPath();
             ctx.lineWidth = "5";
             ctx.strokeStyle = "red";
-            ctx.rect(this.x + 50, this.y + 25, this.width - 50, this.height - 50);
+            ctx.rect(this.x, this.y + 120, this.width - this.offset.left - this.offset.right, this.height - this.offset.top - this.offset.bottom);
             ctx.stroke();
         }
-    }
+    } */
+
+/*         drawFrameItems(ctx) {
+            if (this instanceof ThrowableObject) {
+                this.testCollisionOffsets(
+                    ctx, 
+                    this.x, 
+                    this.y, 
+                    this.width, 
+                    this.height, 
+                    this.offset.left, 
+                    this.offset.right, 
+                    this.offset.top, 
+                    this.offset.bottom
+                );
+            }
+        }
+
+        testCollisionOffsets(ctx, x, y, width, height, offsetLeft, offsetRight, offsetTop, offsetBottom) {
+            ctx.beginPath();
+            ctx.lineWidth = "3";
+            ctx.strokeStyle = "blue";
+            ctx.rect(
+                x + offsetLeft, 
+                y + offsetTop, 
+                width - offsetLeft - offsetRight, 
+                height - offsetTop - offsetBottom
+            );
+            ctx.stroke();
+        } */
 }

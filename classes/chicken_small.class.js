@@ -1,5 +1,5 @@
 class ChickenSmall extends MovableObject {
-    x = 250 + Math.random() * 500;
+    x = 200 + Math.random() * 1100;
     y = 350;
     height = 70;
     width = 70;
@@ -10,6 +10,13 @@ class ChickenSmall extends MovableObject {
         'img/3_enemies_chicken/chicken_small/1_walk/2_w.png',
         'img/3_enemies_chicken/chicken_small/1_walk/3_w.png'
     ];
+
+    offset = {
+        top: 10,
+        bottom: 10,
+        left: 15,
+        right: 10
+    };
 
     constructor() {
         super().loadImage('img/3_enemies_chicken/chicken_small/1_walk/1_w.png');

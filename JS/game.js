@@ -2,9 +2,11 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 let intro = document.getElementById("intro");
-let volumeState = 1;
+let volumeState = 0;
 let gameoverScreen = document.getElementById("gameover");
-let winScreen = document.getElementById("winScreen")
+let winScreen = document.getElementById("winScreen");
+let rotatePhone = document.getElementById("rotatePhone")
+let soundVolume = 1;
 
 function startGame() {
     canvas = document.getElementById("canvas");
@@ -21,28 +23,38 @@ function toggleFullscreen() {
     fullscreen = document.getElementById("body");
     if (fullscreen.requestFullscreen) {
         fullscreen.requestFullscreen();
-    }else if(fullscreen.webkitRequestFullscreen){
+    } else if (fullscreen.webkitRequestFullscreen) {
         fullscreen.webkitRequestFullscreen();
-    }else if(fullscreen.msRequestFullscreen){
+    } else if (fullscreen.msRequestFullscreen) {
         fullscreen.msRequestFullscreen();
     }
 }
 
 function toggleMute() {
-    volume = document.getElementById("volume");
-
-    switch (volumeState) {
-        case 1:
-            volume.src = 'img/10_controls/mute.png';
-            volumeState = 2;
-            break;
-    
-        case 2:
-            volume.src = 'img/10_controls/volume.png';
-            volumeState = 1;
-            break;
-    }
+    soundVolume = soundVolume == 1 ? 0 : 1;
+    updateMuteIcon();
 }
+
+
+function updateMuteIcon() {
+    document.getElementById("volume").src = soundVolume === 0  ? 'img/10_controls/mute.png' : 'img/10_controls/volume.png';
+}
+
+
+/* window.onresize = function () {
+    applyOrientation();
+}
+
+function applyOrientation() {
+    let rotatePhone = document.getElementById("rotatePhone");
+
+    if (window.innerWidth < window.innerHeight) {
+        rotatePhone.style.display = "flex";
+    } else {
+        rotatePhone.style.display = "none";
+    }
+} */
+
 
 function gameover() {
     gameoverScreen.style.display = "flex";
@@ -58,7 +70,7 @@ function playerWon() {
 
 function clearAllIntervals() {
     for (let i = 1; i < 9999; i++) window.clearInterval(i);
-  }
+}
 
 document.addEventListener("keydown", (e) => {
     if (e.keyCode == 39) {
@@ -106,7 +118,7 @@ document.addEventListener("keyup", (e) => {
     if (e.keyCode == 40) {
         keyboard.DOWN = false;
     }
-    
+
     if (e.keyCode == 68) {
         keyboard.D = false;
     }
