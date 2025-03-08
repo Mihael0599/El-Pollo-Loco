@@ -77,7 +77,9 @@ class World {
             this.bottleThrown = false;
         }
     }
-
+    /**
+     * Checks collisions between the character and enemies.
+     */
     checkCollision() {
         this.level.enemies.forEach((enemy, index) => {
             if (this.character.isColliding(enemy, index) && this.character.isAboveGround()) {
@@ -93,6 +95,9 @@ class World {
         });
     }
 
+    /**
+     * Checks if the character collects a coin.
+     */
     checkCollisionCoin() {
         this.level.coins.forEach((coin, index) => {
             if (this.character.isColliding(coin)) {
@@ -104,6 +109,9 @@ class World {
         });
     }
 
+    /**
+     * Checks if the character collects a bottle.
+     */
     checkCollisionBottle() {
         this.level.bottles.forEach((bottles, index) => {
             if (this.character.isColliding(bottles)) {
@@ -115,6 +123,9 @@ class World {
         });
     }
 
+    /**
+     * Checks if a thrown bottle collides with an enemy.
+     */
     checkBottleCollision() {
         this.thowableObjects.forEach((bottle, bottleIndex) => {
             this.level.enemies.forEach((enemy) => {
@@ -131,29 +142,48 @@ class World {
         });
     }
 
+    /**
+     * Shows gameover Screen and clears all intervalss
+     */
     gameover() {
         clearInterval(this.run);
         showGameOver();
     }
 
+
+    /**
+     * Handles interactions when an enemy is hit.
+     * @param {Object} enemy - The enemy that was hit.
+     */
     enemyHited(enemy) {
         enemy.isEnemyHit();
-        this.removeEnemyFromWorld(enemy)
+        this.removeEnemyFromWorld(enemy);
         this.playEnemyHitAudio();
     }
 
+    /**
+     * Handles interactions when the Endboss is hit.
+     * @param {Object} enemy - The Endboss that was hit.
+     */
     endbossHited(enemy) {
         enemy.isEndbossHit();
         this.playEnemyHitAudio();
         this.statusBarEndboss.setPercentage(enemy.endBossEnergy);
     }
 
+    /**
+     * Removes an enemy from the world after a short delay.
+     * @param {Object} enemyToRemove - The enemy object to be removed.
+     */
     removeEnemyFromWorld(enemyToRemove) {
         setTimeout(() => {
             this.level.enemies = this.level.enemies.filter(enemy => enemy !== enemyToRemove);
         }, 200);
     }
 
+    /**
+     * Draws the game world and objects.
+     */
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.height, this.canvas.width);
         this.ctx.translate(this.camera_x, 0);
@@ -169,6 +199,9 @@ class World {
         });
     }
 
+    /**
+     * Adds various objects to the game world, including background, enemies, and collectibles.
+     */
     addObjects() {
         this.addObjectsToMap(this.level.background);
         this.addObjectsToMap(this.thowableObjects);
@@ -178,6 +211,9 @@ class World {
         this.addObjectsToMap(this.level.bottles);
     }
 
+    /**
+     * Adds status bars to the game world, including character and Endboss health bars.
+     */
     addStatusBarsToMap() {
         this.addToMap(this.statusBar);
         this.addToMap(this.statusBarCoins);
@@ -187,12 +223,20 @@ class World {
         }
     }
 
+    /**
+     * Adds an array of objects to the game map.
+     * @param {Object[]} objects - The objects to be added to the map.
+     */
     addObjectsToMap(objects) {
         objects.forEach(o => {
             this.addToMap(o);
-        })
+        });
     }
 
+    /**
+     * Adds a single object to the game map and handles object flipping if necessary.
+     * @param {Object} mo - The movable object to be added to the map.
+     */
     addToMap(mo) {
         if (mo.otherDirection) {
             this.spinImage(mo);
@@ -206,6 +250,10 @@ class World {
         }
     }
 
+    /**
+     * Flips an image horizontally before drawing it.
+     * @param {Object} mo - The movable object to be flipped.
+     */
     spinImage(mo) {
         this.ctx.save();
         this.ctx.translate(mo.width, 0);
@@ -213,26 +261,42 @@ class World {
         mo.x = mo.x * -1;
     }
 
+    /**
+     * Restores the image position after flipping.
+     * @param {Object} mo - The movable object to be restored.
+     */
     spinImageBack(mo) {
         mo.x = mo.x * -1;
         this.ctx.restore();
     }
 
+    /**
+     * Plays the enemy hit sound.
+     */
     playEnemyHitAudio() {
         this.enemyHitAudio.volume = soundVolume;
         this.enemyHitAudio.play();
     }
 
+    /**
+     * Plays the character hit sound.
+     */
     playCharackterHitAudio() {
         this.charackterHitAudio.volume = soundVolume;
         this.charackterHitAudio.play();
     }
 
+    /**
+     * Plays the bottle collected sound.
+     */
     playBottleCollectedAudio() {
         this.bottleCollectedAudio.volume = soundVolume;
         this.bottleCollectedAudio.play();
     }
 
+    /**
+     * Plays the coin collected sound.
+     */
     playCoinCollectedAudio() {
         this.coinCollectedAudio.volume = soundVolume;
         this.coinCollectedAudio.play();
