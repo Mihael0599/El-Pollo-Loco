@@ -29,40 +29,54 @@
     <script src="./Levels/level1.js"></script>
 </head>
 
-<body id="body">
-    <h1>El Pollo Loco</h1>
-    <canvas id="canvas" width="720px" height="480px"></canvas>
-    <div class="start-screen" id="intro">
-        <div class="start-button-container">
-            <button class="start-btn" onclick="startGame()">Start</button>
-            <div class="fullscreen-volume-container">
-                <img onclick="toggleMute()" id="volume" class="volume-img" src="./img/10_controls/volume.png" alt="">
-                <img onclick="toggleFullscreen()" class="fullscreen-img" src="./img/10_controls/fullscreen.png" alt="">
+<body>
+    <div id="fullScreen" class="backgorund-container">
+        <h1>El Pollo Loco</h1>
+        <canvas id="canvas" width="720px" height="480px"></canvas>
+        <div class="start-screen" id="intro">
+            <div class="start-button-container">
+                <button class="start-btn" onclick="startGame()">Start</button>
+                <div class="fullscreen-volume-container">
+                    <img onclick="toggleMute()" id="volume" class="volume-img" src="./img/10_controls/volume.png"
+                        alt="">
+                    <img onclick="toggleFullscreen()" id="fullScreenBtn" class="fullscreen-img"
+                        src="./img/10_controls/fullscreen.png" alt="">
+                </div>
+            </div>
+            <div class="controls" id="controls">
+                <p>Move Left and Right</p>
+                <img class="arrow-img" src="./img/10_controls/arrow_left.png" alt="">
+                <img class="arrow-img" src="./img/10_controls/arrow_right.png" alt="">
+                <p>Jump</p>
+                <img class="space-img" src="./img/10_controls/space.png" alt="">
+                <p>Throw Bottle</p>
+                <p>D</p>
             </div>
         </div>
-        <div class="controls">
-            <p>Move Left and Right</p>
-            <img class="arrow-img" src="./img/10_controls/arrow_left.png" alt="">
-            <img class="arrow-img" src="./img/10_controls/arrow_right.png" alt="">
-            <p>Jump</p>
-            <img class="space-img" src="./img/10_controls/space.png" alt="">
-            <p>Throw Bottle</p>
-            <p>D</p>
+        <div class="controls-mobile" id="controlsMobile">
+            <div class="move-buttons">
+                <button id="moveLeft" class="control-btns"><img class="arrow-img" src="./img/10_controls/arrow_left.png" alt=""></button>
+                <button id="moveRight" class="control-btns"><img class="arrow-img" src="./img/10_controls/arrow_right.png" alt=""></button>
+            </div>
+            <div class="jump-throw-buttons">
+                <button id="jump" class="control-btns"><img class="arrow-img" src="./img/10_controls/arrow-up.png" alt=""></button>
+                <button id="throw" class="control-btns"><img class="arrow-img" src="./img/10_controls/throw-arrow.png" alt=""></button>
+            </div>
         </div>
-    </div>
-    <div class="gameover" id="gameover">
-        <div class="btn-container">
-            <button class="restart-btn" onclick="startGame()">Play again</button>
+        <div class="gameover" id="gameover">
+            <div class="btn-container">
+                <button class="restart-btn" onclick="startGame()">Play again</button>
+            </div>
         </div>
-    </div>
-    <div class="win-screen" id="winScreen">
-        <div class="btn-container">
-            <button class="restart-btn" onclick="startGame()">Play again</button>
-        </div>
+        <div class="win-screen" id="winScreen">
+            <div class="btn-container">
+                <button class="restart-btn" onclick="startGame()">Play again</button>
+            </div>
 
-    </div>
-    <div class="rotate-phone" id="rotatePhone">
-        <img class="rotate-img" src="./img/rotateyourphone.webp" alt="">
+        </div>
+        <div class="rotate-phone" id="rotatePhone">
+            <img class="rotate-img" src="./img/rotateyourphone.webp" alt="">
+        </div>
     </div>
 </body>
 <script src="./JS/game.js"></script>

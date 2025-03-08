@@ -3,7 +3,7 @@ class MovableObject extends DrawableObject {
     otherDirection = false;
     speedY = 0;
     acceleration = 1;
-    energy = 5000;
+    energy = 500;
     lastHit = 0;
     enemyLastHit = 0;
     coinsCollected = 0;
@@ -48,7 +48,11 @@ class MovableObject extends DrawableObject {
      }
 
     bottleCollected() {
-        this.bottlesCollected += 20;
+        if (this.bottlesCollected < 100) {
+            this.bottlesCollected += 20;
+        }else{
+            return false;
+        }
     }
 
     isHit() {

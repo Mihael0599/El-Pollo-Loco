@@ -1,4 +1,9 @@
 body {
+    margin: 0;
+    font-family: 'zabras', Arial, Helvetica, sans-serif;
+}
+
+.backgorund-container{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -9,8 +14,6 @@ body {
     background-size: cover;
     flex-direction: column;
     height: 100vh;
-    margin: 0;
-    font-family: 'zabras', Arial, Helvetica, sans-serif;
 }
 
 h1 {
@@ -163,6 +166,33 @@ p {
 .rotate-img {
     width: 100%;
     object-fit: cover;
+}
+
+.controls-mobile{
+    display: none;
+    flex-direction: row;   
+    justify-content: space-between;
+    width: 480px;
+    position: absolute;
+    top: 88%;
+}
+
+.move-buttons{
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+}
+
+.jump-throw-buttons{
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+}
+
+.control-btns{
+    background: none;
+    background-color: #D3833A;
+    border-radius: 10px;
 }
 
 @font-face {

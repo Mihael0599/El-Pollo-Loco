@@ -80,8 +80,6 @@ class World {
         });
     }
 
-    
-
     checkCollisionCoin() {
         this.level.coins.forEach((coin, index) => {
             if (this.character.isColliding(coin)) {
@@ -209,12 +207,12 @@ class World {
         this.charackterHitAudio.play();
     }
 
-    playBottleCollectedAudio(){
+    playBottleCollectedAudio() {
         this.bottleCollectedAudio.volume = soundVolume;
         this.bottleCollectedAudio.play();
     }
 
-    playCoinCollectedAudio(){
+    playCoinCollectedAudio() {
         this.coinCollectedAudio.volume = soundVolume;
         this.coinCollectedAudio.play();
     }

@@ -110,7 +110,7 @@ class Character extends MovableObject {
 
     isCharacterDead() {
         if (this.isDead()) {
-            this.deadSound.play();
+            this.playDeadSound();
             gameover();
         }
     }
@@ -139,8 +139,7 @@ class Character extends MovableObject {
 
     characterJump() {
         this.jump();
-        this.jumpSound.volume = soundVolume
-        this.jumpSound.play();
+        this.playJumpAudio();
         this.isCharacterMoving();
     }
 
@@ -148,8 +147,7 @@ class Character extends MovableObject {
         if (this.canMoveLeft()) {
             this.otherDirection = true;
             this.moveLeft();
-            this.moveSound.volume = soundVolume
-            this.moveSound.play();
+            this.playMoveAudio();
             this.isCharacterMoving();
         }
     }
@@ -158,9 +156,23 @@ class Character extends MovableObject {
         if (this.canMoveRight()) {
             this.otherDirection = false;
             this.moveRight();
-            this.moveSound.volume = soundVolume
-            this.moveSound.play();
+            this.playMoveAudio();
             this.isCharacterMoving();
         }
+    }
+
+    playMoveAudio(){
+        this.moveSound.volume = soundVolume;
+        this.moveSound.play();
+    }
+
+    playJumpAudio(){
+        this.jumpSound.volume = soundVolume;
+        this.jumpSound.play();
+    }
+
+    playDeadSound(){
+        this.deadSound.volume = soundVolume;
+        this.deadSound.play();
     }
 }

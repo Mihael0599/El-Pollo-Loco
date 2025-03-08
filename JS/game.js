@@ -7,6 +7,13 @@ let gameoverScreen = document.getElementById("gameover");
 let winScreen = document.getElementById("winScreen");
 let rotatePhone = document.getElementById("rotatePhone")
 let soundVolume = 1;
+let controlsMobile = document.getElementById("controlsMobile");
+let controls = document.getElementById("controls");
+let moveLeft = document.getElementById("moveLeft");
+let moveRight = document.getElementById("moveRight");
+let jump = document.getElementById("jump");
+let throwBottle = document.getElementById("throw");
+
 
 function startGame() {
     canvas = document.getElementById("canvas");
@@ -19,14 +26,29 @@ function startGame() {
     world = new World(canvas, keyboard);
 }
 
+
 function toggleFullscreen() {
-    fullscreen = document.getElementById("body");
-    if (fullscreen.requestFullscreen) {
-        fullscreen.requestFullscreen();
-    } else if (fullscreen.webkitRequestFullscreen) {
-        fullscreen.webkitRequestFullscreen();
-    } else if (fullscreen.msRequestFullscreen) {
-        fullscreen.msRequestFullscreen();
+    fullscreen = document.getElementById("fullScreen");
+    if (!document.fullscreenElement) {
+        if (fullscreen.requestFullscreen) {
+            fullscreen.requestFullscreen();
+        } else if (fullscreen.webkitRequestFullscreen) {
+            fullscreen.webkitRequestFullscreen();
+        } else if (fullscreen.msRequestFullscreen) {
+            fullscreen.msRequestFullscreen();
+        }
+    } else {
+        exitFullScreen();
+    }
+}
+
+function exitFullScreen() {
+    if (document.exitFullscreen) {
+        document.exitFullscreen();
+    } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+    } else if (document.msExitFullscreen) {
+        document.msExitFullscreen();
     }
 }
 
@@ -37,24 +59,35 @@ function toggleMute() {
 
 
 function updateMuteIcon() {
-    document.getElementById("volume").src = soundVolume === 0  ? 'img/10_controls/mute.png' : 'img/10_controls/volume.png';
+    document.getElementById("volume").src = soundVolume === 0 ? 'img/10_controls/mute.png' : 'img/10_controls/volume.png';
 }
 
 
-/* window.onresize = function () {
-    applyOrientation();
+function isLandscape() {
+    return window.matchMedia("(orientation: landscape)").matches;
 }
 
-function applyOrientation() {
+function checkOrientation() {
     let rotatePhone = document.getElementById("rotatePhone");
 
-    if (window.innerWidth < window.innerHeight) {
+    if (window.innerWidth < 750 && !isLandscape()) {
         rotatePhone.style.display = "flex";
+        controlsMobile.style.display = "none";
+        controls.style.display = "none";
+    } else if (isLandscape() && window.innerWidth < 750) {
+        rotatePhone.style.display = "none";
+        controls.style.display = "none";
+        controlsMobile.style.display = "flex";
     } else {
         rotatePhone.style.display = "none";
+        controlsMobile.style.display = "none";
+        controls.style.display = "flex";
     }
-} */
+}
 
+
+document.addEventListener("DOMContentLoaded", checkOrientation);
+window.addEventListener("resize", checkOrientation);
 
 function gameover() {
     gameoverScreen.style.display = "flex";

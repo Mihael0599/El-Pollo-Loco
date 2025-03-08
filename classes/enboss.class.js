@@ -4,6 +4,8 @@ class Endboss extends MovableObject {
     gameoverAudio = new Audio('audio/game-over-arcade-6435.mp3');
     showHealthBar = false;
     wasEncountered = false;
+    character;
+    distance;
 
     images_walking = [
         'img/4_enemie_boss_chicken/1_walk/G1.png',
@@ -66,8 +68,8 @@ class Endboss extends MovableObject {
         } else if (this.isEndBossDead()) {
             this.playAnimation(this.images_dead);
             playerWon();
-            this.gameoverAudio.play();
-        }else if(this.wasEncountered){
+            this.playGameoverAudio();
+        } else if (this.wasEncountered) {
             this.playAnimation(this.images_attack);
         }
     }
@@ -79,23 +81,28 @@ class Endboss extends MovableObject {
         this.checkCharacterDistance();
     }
 
-    showStatusBar(){
-       return this.showHealthBar;
+    showStatusBar() {
+        return this.showHealthBar;
     }
 
     checkCharacterDistance() {
-        let character = world.character;
-        let distance = Math.abs(character.x - this.x);
-        if (distance < 300) {
+        this.character = world.character;
+        this.distance = Math.abs(this.character.x - this.x);
+        if (this.distance < 300) {
             this.wasEncountered = true;
             this.showHealthBar = true;
-        } else if(distance > 300){
+        } else if (this.distance > 300) {
             this.wasEncountered = false;
         }
     }
 
     canEndbossMove() {
         return !this.isEndBossDead();
+    }
+
+    playGameoverAudio() {
+        this.gameoverAudio.volume = soundVolume;
+        this.gameoverAudio.play();
     }
 
 }
