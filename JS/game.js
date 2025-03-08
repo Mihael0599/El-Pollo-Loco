@@ -1,20 +1,22 @@
+/**
+ * Global game variables and event listeners.
+ */
 let canvas;
 let world;
 let keyboard = new Keyboard();
 let intro = document.getElementById("intro");
-let volumeState = 0;
 let gameoverScreen = document.getElementById("gameover");
 let winScreen = document.getElementById("winScreen");
-let rotatePhone = document.getElementById("rotatePhone")
+let rotatePhone = document.getElementById("rotatePhone");
 let soundVolume = 1;
 let controlsMobile = document.getElementById("controlsMobile");
 let controls = document.getElementById("controls");
-let moveLeft = document.getElementById("moveLeft");
-let moveRight = document.getElementById("moveRight");
-let jump = document.getElementById("jump");
-let throwBottle = document.getElementById("throw");
+let impressum = document.getElementById("impressum");
+let fullscreen = document.getElementById("fullScreen");
 
-
+/**
+ * Starts the game by initializing the level and creating the game world.
+ */
 function startGame() {
     canvas = document.getElementById("canvas");
     intro = document.getElementById("intro");
@@ -26,7 +28,9 @@ function startGame() {
     world = new World(canvas, keyboard);
 }
 
-
+/**
+ * Toggles fullscreen mode for the game.
+ */
 function toggleFullscreen() {
     fullscreen = document.getElementById("fullScreen");
     if (!document.fullscreenElement) {
@@ -36,12 +40,17 @@ function toggleFullscreen() {
             fullscreen.webkitRequestFullscreen();
         } else if (fullscreen.msRequestFullscreen) {
             fullscreen.msRequestFullscreen();
+        } else if (fullscreen.mozRequestFullScreen) {
+            fullscreen.mozRequestFullScreen();
         }
     } else {
         exitFullScreen();
     }
 }
 
+/**
+ * Exits fullscreen mode.
+ */
 function exitFullScreen() {
     if (document.exitFullscreen) {
         document.exitFullscreen();
@@ -52,21 +61,32 @@ function exitFullScreen() {
     }
 }
 
+/**
+ * Toggles the game sound between mute and unmute.
+ */
 function toggleMute() {
     soundVolume = soundVolume == 1 ? 0 : 1;
     updateMuteIcon();
 }
 
-
+/**
+ * Updates the mute/unmute icon based on the sound volume.
+ */
 function updateMuteIcon() {
     document.getElementById("volume").src = soundVolume === 0 ? 'img/10_controls/mute.png' : 'img/10_controls/volume.png';
 }
 
-
+/**
+ * Checks if the current screen orientation is landscape.
+ * @returns {boolean} True if the screen is in landscape mode.
+ */
 function isLandscape() {
     return window.matchMedia("(orientation: landscape)").matches;
 }
 
+/**
+ * Adjusts game controls and UI elements based on screen orientation.
+ */
 function checkOrientation() {
     let rotatePhone = document.getElementById("rotatePhone");
 
@@ -74,7 +94,7 @@ function checkOrientation() {
         rotatePhone.style.display = "flex";
         controlsMobile.style.display = "none";
         controls.style.display = "none";
-    } else if (isLandscape() && window.innerWidth < 750) {
+    } else if (isLandscape() && window.innerWidth < 1100) {
         rotatePhone.style.display = "none";
         controls.style.display = "none";
         controlsMobile.style.display = "flex";
@@ -85,74 +105,58 @@ function checkOrientation() {
     }
 }
 
-
 document.addEventListener("DOMContentLoaded", checkOrientation);
 window.addEventListener("resize", checkOrientation);
 
+/**
+ * Displays the game over screen and stops the game.
+ */
 function gameover() {
     gameoverScreen.style.display = "flex";
     canvas.style.display = "none";
     clearAllIntervals();
 }
 
+/**
+ * Displays the win screen when the player wins the game.
+ */
 function playerWon() {
     winScreen.style.display = "flex";
     canvas.style.display = "none";
     clearAllIntervals();
 }
 
+/**
+ * Clears all active intervals to stop animations and timers.
+ */
 function clearAllIntervals() {
     for (let i = 1; i < 9999; i++) window.clearInterval(i);
 }
 
-document.addEventListener("keydown", (e) => {
-    if (e.keyCode == 39) {
-        keyboard.RIGHT = true;
-    }
+/**
+ * Returns to the start screen from the game over or win screen.
+ */
+function backToStartScreen() {
+    gameoverScreen.style.display = "none";
+    winScreen.style.display = "none";
+    intro.style.display = "flex";
+}
 
-    if (e.keyCode == 37) {
-        keyboard.LEFT = true;
-    }
+/**
+ * Displays the Impressum section and hides the start screen.
+ */
+function showImpressum() {
+    impressum.style.display = "flex";
+    intro.style.display = "none";
+}
 
-    if (e.keyCode == 32) {
-        keyboard.SPACE = true;
+/**
+ * Closes the Impressum section when clicking outside of it.
+ * @param {Event} event - The event triggered by clicking.
+ */
+window.onclick = function (event) {
+    if (event.target == fullscreen) {
+        impressum.style.display = "none";
+        intro.style.display = "flex";
     }
-
-    if (e.keyCode == 38) {
-        keyboard.UP = true;
-    }
-
-    if (e.keyCode == 40) {
-        keyboard.UP = true;
-    }
-
-    if (e.keyCode == 68) {
-        keyboard.D = true;
-    }
-})
-
-document.addEventListener("keyup", (e) => {
-    if (e.keyCode == 39) {
-        keyboard.RIGHT = false;
-    }
-
-    if (e.keyCode == 37) {
-        keyboard.LEFT = false;
-    }
-
-    if (e.keyCode == 32) {
-        keyboard.SPACE = false;
-    }
-
-    if (e.keyCode == 38) {
-        keyboard.UP = false;
-    }
-
-    if (e.keyCode == 40) {
-        keyboard.DOWN = false;
-    }
-
-    if (e.keyCode == 68) {
-        keyboard.D = false;
-    }
-})
+}

@@ -19,6 +19,11 @@ class World {
     charackterHitAudio = new Audio('audio/charackter_hurt.mp3');
     enemyHitAudio = new Audio('audio/retro-hurt-2-236675.mp3');
 
+    /**
+     * Creates an instance of the World class.
+     * @param {HTMLCanvasElement} canvas - The canvas element where the game is rendered.
+     * @param {Object} keyboard - The keyboard input handler.
+     */
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
@@ -28,10 +33,16 @@ class World {
         this.run();
     }
 
+    /**
+     * Sets the world reference for the character
+     */
     setWorld() {
         this.character.world = this;
     }
 
+    /**
+     * Starts the game loop and checks for collisions and throw actions.
+     */
     run() {
         setInterval(() => {
             this.checkCollisions();
@@ -42,16 +53,18 @@ class World {
         }, 50);
     }
 
-    checkThrowObjects() {
-        this.checkThrowObjects();
-    }
-
+    /**
+     * Checks collisions between the character and enemies.
+     */
     checkCollisions() {
         this.checkCollision();
         this.checkCollisionCoin();
         this.checkCollisionBottle();
         this.checkBottleCollision();
     }
+    /**
+     * Checks if an object should be thrown.
+     */
     checkThrowObjects() {
         if (this.keyboard.D && !this.bottleThrown && this.character.bottlesCollected > 0) {
             let bottle = new ThrowableObject(this.character.x + 40, this.character.y + 100, this.character.otherDirection);
@@ -104,17 +117,13 @@ class World {
 
     checkBottleCollision() {
         this.thowableObjects.forEach((bottle, bottleIndex) => {
-            this.level.enemies.forEach((enemy, index) => {
+            this.level.enemies.forEach((enemy) => {
                 if (bottle.isColliding(enemy) && !enemy.dead) {
                     if (enemy instanceof Chicken || enemy instanceof ChickenSmall) {
-                        enemy.isEnemyHit();
-                        this.removeEnemyFromWorld(enemy)
-                        this.playEnemyHitAudio();
+                        this.enemyHited(enemy);
                     }
                     if (enemy instanceof Endboss) {
-                        enemy.isEndbossHit();
-                        this.playEnemyHitAudio();
-                        this.statusBarEndboss.setPercentage(enemy.endBossEnergy);
+                        this.endbossHited(enemy);
                     }
                     this.thowableObjects.splice(bottleIndex, 1);
                 }
@@ -125,6 +134,18 @@ class World {
     gameover() {
         clearInterval(this.run);
         showGameOver();
+    }
+
+    enemyHited(enemy) {
+        enemy.isEnemyHit();
+        this.removeEnemyFromWorld(enemy)
+        this.playEnemyHitAudio();
+    }
+
+    endbossHited(enemy) {
+        enemy.isEndbossHit();
+        this.playEnemyHitAudio();
+        this.statusBarEndboss.setPercentage(enemy.endBossEnergy);
     }
 
     removeEnemyFromWorld(enemyToRemove) {
