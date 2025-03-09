@@ -8,11 +8,20 @@ let intro = document.getElementById("intro");
 let gameoverScreen = document.getElementById("gameover");
 let winScreen = document.getElementById("winScreen");
 let rotatePhone = document.getElementById("rotatePhone");
-let soundVolume = 1;
 let controlsMobile = document.getElementById("controlsMobile");
 let controls = document.getElementById("controls");
 let impressum = document.getElementById("impressum");
 let fullscreen = document.getElementById("fullScreen");
+let backgorundMusic = new Audio('audio/backgorund-music.mp3');
+let soundVolume = localStorage.getItem("Sound") !== null ? parseFloat(localStorage.getItem("Sound")) : 1;
+let backgorundMusicVolume = localStorage.getItem("Backgorund Music") !== null ? parseFloat(localStorage.getItem("Backgorund Music")) : 0.1;
+
+/**
+ * Initializes the game settings by checking the mute status.
+ */
+function init() {
+    checkMute();
+}
 
 /**
  * Starts the game by initializing the level and creating the game world.
@@ -24,6 +33,7 @@ function startGame() {
     gameoverScreen.style.display = "none";
     winScreen.style.display = "none";
     canvas.style.display = "block";
+    playBckgorundMusic();
     initLevel();
     world = new World(canvas, keyboard);
 }
@@ -66,7 +76,29 @@ function exitFullScreen() {
  */
 function toggleMute() {
     soundVolume = soundVolume == 1 ? 0 : 1;
+    backgorundMusicVolume = backgorundMusicVolume == 0.1 ? 0 : 0.1;
     updateMuteIcon();
+    setToLocalStorage();
+}
+
+/**
+ * Checks the mute status by retrieving values from local storage.
+ * If values are not present, it sets them to default.
+ * Updates the mute icon accordingly.
+ */
+function checkMute() {
+    setToLocalStorage()
+    soundVolume = parseFloat(localStorage.getItem("Sound"));
+    backgorundMusicVolume = parseFloat(localStorage.getItem("Backgorund Music"));
+    updateMuteIcon();
+}
+
+/**
+ * Saves the current sound settings to local storage.
+ */
+function setToLocalStorage() {
+    localStorage.setItem("Sound", soundVolume);
+    localStorage.setItem("Backgorund Music", backgorundMusicVolume);
 }
 
 /**
@@ -75,6 +107,7 @@ function toggleMute() {
 function updateMuteIcon() {
     document.getElementById("volume").src = soundVolume === 0 ? 'img/10_controls/mute.png' : 'img/10_controls/volume.png';
 }
+
 
 /**
  * Checks if the current screen orientation is landscape.
@@ -94,14 +127,17 @@ function checkOrientation() {
         rotatePhone.style.display = "flex";
         controlsMobile.style.display = "none";
         controls.style.display = "none";
+        intro.style.display = "none";
     } else if (isLandscape() && window.innerWidth < 1100) {
         rotatePhone.style.display = "none";
         controls.style.display = "none";
         controlsMobile.style.display = "flex";
+        intro.style.display = "flex";
     } else {
         rotatePhone.style.display = "none";
         controlsMobile.style.display = "none";
         controls.style.display = "flex";
+        intro.style.display = "flex";
     }
 }
 
@@ -114,6 +150,7 @@ window.addEventListener("resize", checkOrientation);
 function gameover() {
     gameoverScreen.style.display = "flex";
     canvas.style.display = "none";
+    stopBackgorundMusic();
     clearAllIntervals();
 }
 
@@ -123,6 +160,7 @@ function gameover() {
 function playerWon() {
     winScreen.style.display = "flex";
     canvas.style.display = "none";
+    stopBackgorundMusic();
     clearAllIntervals();
 }
 
@@ -151,12 +189,25 @@ function showImpressum() {
 }
 
 /**
- * Closes the Impressum section when clicking outside of it.
- * @param {Event} event - The event triggered by clicking.
+ * Closes the Impressum section and returns back to strat screen.
  */
-window.onclick = function (event) {
-    if (event.target == fullscreen) {
-        impressum.style.display = "none";
-        intro.style.display = "flex";
-    }
+function closeImpressum() {
+    impressum.style.display = "none";
+    intro.style.display = "flex";
+}
+
+/**
+ * plays Background music
+ */
+function playBckgorundMusic() {
+    backgorundMusic.volume = backgorundMusicVolume;
+    backgorundMusic.play();
+}
+
+/**
+ * Stops background music and reset it
+ */
+function stopBackgorundMusic() {
+    backgorundMusic.pause();
+    backgorundMusic.currentTime = 0;
 }

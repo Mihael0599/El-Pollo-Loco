@@ -144,7 +144,7 @@ class Character extends MovableObject {
      */
     animate() {
         setInterval(() => this.charachterMoving(), 1000 / 60);
-        setInterval(() => this.playAnimationCharacter(), 100);
+        setInterval(() => this.playAnimationCharacter(), 70);
     }
 
     /**
@@ -159,6 +159,8 @@ class Character extends MovableObject {
             this.playAnimation(this.images_walking);
         } else if (this.characterIsSleeping()) {
             this.playAnimation(this.images_sleep);
+        } else {
+            this.loadImage('img/2_character_pepe/1_idle/idle/I-1.png');
         }
         this.isCharacterDead();
     }

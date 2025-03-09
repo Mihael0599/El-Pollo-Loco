@@ -29,7 +29,7 @@
     <script src="./Levels/level1.js"></script>
 </head>
 
-<body id="body">
+<body id="body" onload="init()">
     <div id="fullScreen" class="backgorund-container">
         <h1>El Pollo Loco</h1>
         <canvas id="canvas" width="720px" height="480px"></canvas>
@@ -86,6 +86,7 @@
         </div>
         <div class="impressum" id="impressum">
             <h1>Impressum</h1>
+            <img onclick="closeImpressum()" class="arrow-back" src="img/10_controls/arrow_left.png" alt="">
             <div>
                 <p>Mihael Drazic</p>
                 <p>Hohenbergstraße 2</p>

@@ -1,5 +1,5 @@
 class MovableObject extends DrawableObject {
-    
+
     /**
      * The movement speed of the object.
      * @type {number}
@@ -60,13 +60,18 @@ class MovableObject extends DrawableObject {
      */
     endBossEnergy = 100;
 
+    /** 
+     * Die Standard-Bodenhöhe, auf die der Charakter fällt.
+     */
+    groundLevel = 220;
+
     /**
      * Offset values for collision detection.
      * @type {{top: number, left: number, right: number, bottom: number}}
      */
     offset = {
         top: 0,
-        left:  0,
+        left: 0,
         right: 0,
         bottom: 0
     };
@@ -79,8 +84,11 @@ class MovableObject extends DrawableObject {
             if (this.isAboveGround() || this.speedY > 0) {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
+            } else {
+                this.y = this.groundLevel;
+                this.speedY = 0;
             }
-        }, 1000 / 50);
+        }, 1000 / 60);
     }
 
     /**
@@ -91,7 +99,7 @@ class MovableObject extends DrawableObject {
         if (this instanceof ThrowableObject) {
             return true;
         } else {
-            return this.y < 220;
+            return this.y < this.groundLevel;
         }
     }
 
@@ -106,7 +114,7 @@ class MovableObject extends DrawableObject {
             this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
             this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom;
     }
-    
+
     /**
      * Increases the collected coins.
      */
@@ -175,7 +183,7 @@ class MovableObject extends DrawableObject {
     isDead() {
         return this.energy === 0;
     }
-    
+
     /**
      * Checks if the Endboss is dead.
      * @returns {boolean} True if the Endboss has no energy left.

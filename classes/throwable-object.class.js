@@ -43,11 +43,11 @@ class ThrowableObject extends MovableObject {
      * Initiates the throwing motion of the object, applying gravity and movement.
      */
     throw() {
-        this.speedY = 25;
+        this.speedY = 20;
         this.applyGravity();
         let throwDirection = this.isCharachterMovingLeft ? -40 : 40;
         setInterval(() => {
             this.x += throwDirection; 
-        }, 100);
+        }, 70);
     }
 }

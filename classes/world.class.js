@@ -82,11 +82,13 @@ class World {
      */
     checkCollision() {
         this.level.enemies.forEach((enemy, index) => {
-            if (this.character.isColliding(enemy, index) && this.character.isAboveGround()) {
-                enemy.isEnemyHit();
-                this.playEnemyHitAudio();
-                this.removeEnemyFromWorld(enemy);
-                this.character.jump();
+            if (this.character.isColliding(enemy, index) && this.character.isAboveGround() && this.character.speedY < 0) {
+                if (enemy instanceof Chicken || enemy instanceof ChickenSmall) {
+                    enemy.isEnemyHit();
+                    this.playEnemyHitAudio();
+                    this.removeEnemyFromWorld(enemy);
+                    this.character.jump();
+                }
             } else if (!enemy.dead && this.character.isColliding(enemy)) {
                 this.character.isHit();
                 this.playCharackterHitAudio();

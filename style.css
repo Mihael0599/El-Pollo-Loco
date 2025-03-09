@@ -4,16 +4,15 @@ body {
 }
 
 .backgorund-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+    height: 100vh;
     background-image: url("./img/DALL·E\ 2025-02-10\ 20.22.32\ -\ A\ scenic\ desert\ landscape\ illustration\ with\ vast\ golden\ sand\ dunes\,\ scattered\ dry\ bushes\,\ and\ a\ deep\ blue\ twilight\ sky.\ A\ crescent\ moon\ and\ .webp");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     flex-direction: column;
-    height: 100vh;
 }
 
 h1 {
@@ -34,15 +33,14 @@ h2:hover{
 }
 
 .start-screen {
+    background-image: url('img/9_intro_outro_screens/start/startscreen_3.png');
     height: 480px;
     width: 720px;
-    background-image: url("./img/9_intro_outro_screens/start/startscreen_1.png");
     background-position: center;
     background-size: cover;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-
 }
 
 canvas {
@@ -105,6 +103,7 @@ canvas {
 .controls {
     padding-left: 20px;
     display: flex;
+    justify-content: center;
     flex-direction: row;
     gap: 10px;
     padding-bottom: 20px;
@@ -249,9 +248,27 @@ p {
     color: white;
 }
 
+.arrow-back {
+    height: 40px;
+    width: 40px;
+    position: absolute;
+    right: 50px;
+    top: 10px;
+}
+
+.arrow-back:hover{
+    cursor: pointer;
+}
+
 @font-face {
     font-family: 'zabras';
     src: url('./fonts/Zabars.ttf');
+}
+
+@media(max-height: 480px){
+    .impressum{
+        height: 350px;
+    }
 }
 
 @media only screen and (max-width: 720px) {
@@ -275,5 +292,9 @@ p {
 
     h1 {
         display: none;
+    }
+
+    .impressum h1 {
+        display: flex;
     }
 }
