@@ -123,12 +123,12 @@ function isLandscape() {
 function checkOrientation() {
     let rotatePhone = document.getElementById("rotatePhone");
 
-    if (window.innerWidth < 750 && !isLandscape()) {
+    if (window.innerWidth < window.innerHeight && !isLandscape()) {
         rotatePhone.style.display = "flex";
         controlsMobile.style.display = "none";
         controls.style.display = "none";
         intro.style.display = "none";
-    } else if (isLandscape() && window.innerWidth < 1100) {
+    } else if (isLandscape() && window.innerWidth < window.innerHeight) {
         rotatePhone.style.display = "none";
         controls.style.display = "none";
         controlsMobile.style.display = "flex";
