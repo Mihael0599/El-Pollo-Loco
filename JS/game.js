@@ -15,6 +15,7 @@ let fullscreen = document.getElementById("fullScreen");
 let backgorundMusic = new Audio('audio/backgorund-music.mp3');
 let soundVolume = localStorage.getItem("Sound") !== null ? parseFloat(localStorage.getItem("Sound")) : 1;
 let backgorundMusicVolume = localStorage.getItem("Backgorund Music") !== null ? parseFloat(localStorage.getItem("Backgorund Music")) : 0.1;
+let gameStarted = false;
 
 /**
  * Initializes the game settings by checking the mute status.
@@ -128,7 +129,7 @@ function checkOrientation() {
         controlsMobile.style.display = "none";
         controls.style.display = "none";
         intro.style.display = "none";
-    } else if (isLandscape() && window.innerWidth < window.innerHeight) {
+    } else if (isLandscape() && window.innerWidth > window.innerHeight) {
         rotatePhone.style.display = "none";
         controls.style.display = "none";
         controlsMobile.style.display = "flex";

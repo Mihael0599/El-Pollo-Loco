@@ -110,7 +110,7 @@ class Endboss extends MovableObject {
      */
     animate() {
         setInterval(() => this.endBossMoving(), 1000 / 60);
-        setInterval(() => this.playEndbossAnimation(), 200);
+        setInterval(() => this.playEndbossAnimation(), 150);
     }
 
     /**
@@ -157,8 +157,10 @@ class Endboss extends MovableObject {
         if (this.distance < 300) {
             this.wasEncountered = true;
             this.showHealthBar = true;
+            this.speed = 1.2;
         } else if (this.distance > 300) {
             this.wasEncountered = false;
+            this.speed = 0.2;
         }
     }
 

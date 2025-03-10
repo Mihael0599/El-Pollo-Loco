@@ -159,7 +159,7 @@ class MovableObject extends DrawableObject {
      * Reduces the Endboss's energy when hit.
      */
     isEndbossHit() {
-        this.endBossEnergy -= 34;
+        this.endBossEnergy -= 20;
         if (this.endBossEnergy < 0) {
             this.endBossEnergy = 0;
         } else {
