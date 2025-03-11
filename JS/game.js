@@ -221,4 +221,5 @@ function getGameOverTemplate() {
 function getStartScreen() {
     gameScreen.innerHTML = "";
     gameScreen.innerHTML += renderStartScreen();
+    checkMute();
 }
