@@ -66,23 +66,25 @@ function exitFullScreen() {
         document.webkitExitFullscreen();
     } else if (document.msExitFullscreen) {
         document.msExitFullscreen();
+    } 
+    if (canvas) {
+        canvas.width = 720;
+        canvas.height = 480;
+        controlsFullscreen.style.position = "relative";
+        controlsFullscreen.style.right = "-580px";
     }
-    canvas.width = 720;
-    canvas.height = 480;
-    controls.style.position = "relative";
-    controls.style.right = "-580px";
 }
 
 /**
  * Adjusts the canvas size to fit the full screen.
  */
 function resizeCanvas() {
-    controls = document.getElementById("inGameControls");
+    controlsFullscreen = document.getElementById("inGameControls");
     if (canvas) {
         canvas.style.width = "100%";
         canvas.style.height = "100%";
-        controls.style.position = "absolute";
-        controls.style.right = "50px";
+        controlsFullscreen.style.position = "absolute";
+        controlsFullscreen.style.right = "50px";
     }
 }
 
