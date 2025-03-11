@@ -34,7 +34,7 @@ class Level {
      * The x-coordinate where the level ends.
      * @type {number}
      */
-    level_end_x = 3000;
+    level_end_x = 4000;
 
     /**
      * Creates an instance of Level.

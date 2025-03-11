@@ -8,7 +8,7 @@ class ChickenSmall extends MovableObject {
      * The x-coordinate of the small chicken, randomized within a range.
      * @type {number}
      */
-    x = 200 + Math.random() * 2000;
+    x = 400 + Math.random() * 3400;
 
     /**
      * The y-coordinate of the small chicken.

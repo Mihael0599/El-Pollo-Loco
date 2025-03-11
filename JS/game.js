@@ -1,7 +1,7 @@
 /**
  * Global game variables and event listeners.
  */
-let canvas;
+let canvas = document.getElementById("canvas");;
 let world;
 let keyboard = new Keyboard();
 let intro = document.getElementById("intro");
@@ -12,6 +12,7 @@ let controlsMobile = document.getElementById("controlsMobile");
 let controls = document.getElementById("controls");
 let impressum = document.getElementById("impressum");
 let fullscreen = document.getElementById("fullScreen");
+let gameScreen = document.getElementById("gameScreen");
 let backgorundMusic = new Audio('audio/backgorund-music.mp3');
 let soundVolume = localStorage.getItem("Sound") !== null ? parseFloat(localStorage.getItem("Sound")) : 1;
 let backgorundMusicVolume = localStorage.getItem("Backgorund Music") !== null ? parseFloat(localStorage.getItem("Backgorund Music")) : 0.1;
@@ -27,14 +28,11 @@ function init() {
  * Starts the game by initializing the level and creating the game world.
  */
 function startGame() {
+    getCanvasTemplate();
     canvas = document.getElementById("canvas");
-    intro = document.getElementById("intro");
-    intro.style.display = "none";
-    gameoverScreen.style.display = "none";
-    winScreen.style.display = "none";
-    canvas.style.display = "block";
     playBckgorundMusic();
     initLevel();
+    checkMute();
     world = new World(canvas, keyboard);
 }
 
@@ -42,16 +40,16 @@ function startGame() {
  * Toggles fullscreen mode for the game.
  */
 function toggleFullscreen() {
-    fullscreen = document.getElementById("fullScreen");
+    fullscreen = document.getElementById("gameScreen");
     if (!document.fullscreenElement) {
         if (fullscreen.requestFullscreen) {
-            fullscreen.requestFullscreen();
+            fullscreen.requestFullscreen().then(resizeCanvas);
         } else if (fullscreen.webkitRequestFullscreen) {
-            fullscreen.webkitRequestFullscreen();
+            fullscreen.webkitRequestFullscreen().then(resizeCanvas);
         } else if (fullscreen.msRequestFullscreen) {
-            fullscreen.msRequestFullscreen();
+            fullscreen.msRequestFullscreen().then(resizeCanvas);
         } else if (fullscreen.mozRequestFullScreen) {
-            fullscreen.mozRequestFullScreen();
+            fullscreen.mozRequestFullScreen().then(resizeCanvas);
         }
     } else {
         exitFullScreen();
@@ -69,6 +67,23 @@ function exitFullScreen() {
     } else if (document.msExitFullscreen) {
         document.msExitFullscreen();
     }
+    canvas.width = 720;
+    canvas.height = 480;
+    controls.style.position = "relative";
+    controls.style.right = "-580px";
+}
+
+/**
+ * Adjusts the canvas size to fit the full screen.
+ */
+function resizeCanvas() {
+    controls = document.getElementById("inGameControls");
+    if (canvas) {
+        canvas.style.width = "100%";
+        canvas.style.height = "100%";
+        controls.style.position = "absolute";
+        controls.style.right = "50px";
+    }
 }
 
 /**
@@ -77,6 +92,7 @@ function exitFullScreen() {
 function toggleMute() {
     soundVolume = soundVolume == 1 ? 0 : 1;
     backgorundMusicVolume = backgorundMusicVolume == 0.1 ? 0 : 0.1;
+    backgorundMusic.volume = backgorundMusicVolume;
     updateMuteIcon();
     setToLocalStorage();
 }
@@ -108,48 +124,11 @@ function updateMuteIcon() {
     document.getElementById("volume").src = soundVolume === 0 ? 'img/10_controls/mute.png' : 'img/10_controls/volume.png';
 }
 
-
-/**
- * Checks if the current screen orientation is landscape.
- * @returns {boolean} True if the screen is in landscape mode.
- */
-function isLandscape() {
-    return window.matchMedia("(orientation: landscape)").matches;
-}
-
-/**
- * Adjusts game controls and UI elements based on screen orientation.
- */
-function checkOrientation() {
-    let rotatePhone = document.getElementById("rotatePhone");
-
-    if (window.innerWidth < window.innerHeight && !isLandscape()) {
-        rotatePhone.style.display = "flex";
-        controlsMobile.style.display = "none";
-        controls.style.display = "none";
-        intro.style.display = "none";
-    } else if (isLandscape() && window.innerWidth > window.innerHeight) {
-        rotatePhone.style.display = "none";
-        controls.style.display = "none";
-        controlsMobile.style.display = "flex";
-        intro.style.display = "flex";
-    } else {
-        rotatePhone.style.display = "none";
-        controlsMobile.style.display = "none";
-        controls.style.display = "flex";
-        intro.style.display = "flex";
-    }
-}
-
-document.addEventListener("DOMContentLoaded", checkOrientation);
-window.addEventListener("resize", checkOrientation);
-
 /**
  * Displays the game over screen and stops the game.
  */
 function gameover() {
-    gameoverScreen.style.display = "flex";
-    canvas.style.display = "none";
+    getGameOverTemplate();
     stopBackgorundMusic();
     clearAllIntervals();
 }
@@ -158,8 +137,7 @@ function gameover() {
  * Displays the win screen when the player wins the game.
  */
 function playerWon() {
-    winScreen.style.display = "flex";
-    canvas.style.display = "none";
+    getWinTemplate();
     stopBackgorundMusic();
     clearAllIntervals();
 }
@@ -175,9 +153,7 @@ function clearAllIntervals() {
  * Returns to the start screen from the game over or win screen.
  */
 function backToStartScreen() {
-    gameoverScreen.style.display = "none";
-    winScreen.style.display = "none";
-    intro.style.display = "flex";
+    getStartScreen();
 }
 
 /**
@@ -210,4 +186,37 @@ function playBckgorundMusic() {
 function stopBackgorundMusic() {
     backgorundMusic.pause();
     backgorundMusic.currentTime = 0;
+}
+
+/**
+ * Clears the controls and game screen, then renders the canvas.
+ */
+function getCanvasTemplate() {
+    controls.innerHTML = "";
+    gameScreen.innerHTML = "";
+    gameScreen.innerHTML += renderCanvas();
+}
+
+/**
+ * Clears the game screen and renders the win screen.
+ */
+function getWinTemplate() {
+    gameScreen.innerHTML = "";
+    gameScreen.innerHTML += renderWinScreen();
+}
+
+/**
+ * Clears the game screen and renders the game over screen.
+ */
+function getGameOverTemplate() {
+    gameScreen.innerHTML = "";
+    gameScreen.innerHTML += renderGameOverScreen();
+}
+
+/**
+ * Clears the game screen and renders the start screen.
+ */
+function getStartScreen() {
+    gameScreen.innerHTML = "";
+    gameScreen.innerHTML += renderStartScreen();
 }
