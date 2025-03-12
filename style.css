@@ -5,6 +5,7 @@ body {
 
 .backgorund-container {
     height: 100vh;
+    width: 100vw;
     background-image: url("./img/DALL·E\ 2025-02-10\ 20.22.32\ -\ A\ scenic\ desert\ landscape\ illustration\ with\ vast\ golden\ sand\ dunes\,\ scattered\ dry\ bushes\,\ and\ a\ deep\ blue\ twilight\ sky.\ A\ crescent\ moon\ and\ .webp");
     background-repeat: no-repeat;
     background-position: center;
@@ -44,6 +45,9 @@ h2:hover {
 }
 
 .game-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 480px;
     width: 720px;
 }
@@ -273,9 +277,9 @@ p {
     gap: 20px;
     width: 110px;
     align-items: center;
-    position: relative;
-    right: -580px;
-    top: 110px;
+    position: absolute;
+    right: 50px;
+    top: 50px;
 }
 
 @font-face {
@@ -285,6 +289,10 @@ p {
 
 @media (max-width: 720px) {
     .start-screen {
+        width: 100%;
+    }
+    .game-screen{
+        height: 100%;
         width: 100%;
     }
 }
@@ -308,9 +316,39 @@ p {
     .impressum {
         height: 350px;
     }
+    .game-screen {
+        height: 100%;
+        width: 100%;
+    }
+    .start-screen{
+        background-repeat: no-repeat;
+        background-size: auto;
+    }
 }
 
-@media (orientation: landscape) and (max-width: 1290px) and (max-height: 1200px) {
+@media (min-height: 700px){
+    .controls-mobile{
+        top: 74%;
+    }
+
+    .in-game-controls{
+        top: 230px;
+        right: 20%;
+    }
+}
+
+@media(max-width: 1000px){
+    .start-button-container{
+        padding-left: 110px;
+        padding-right: 110px;
+    }
+
+    .in-game-controls{
+        right: 160px;
+    }
+}
+
+@media (orientation: landscape) and (max-width: 1370px) and (max-height: 1200px) {
     .controls-mobile {
         display: flex;
     }
@@ -332,6 +370,11 @@ p {
     .controls {
         display: flex;
     }
+
+/*     .game-screen{
+        height: 100%;
+        width: 100%;
+    } */
 }
 
 @media only screen and (max-width: 720px) {
@@ -346,7 +389,7 @@ p {
 
 @media only screen and (max-height: 480px) {
     canvas {
-        height: 100vh;
+        height: 100%;
     }
 
     .start-screen {

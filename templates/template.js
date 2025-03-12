@@ -5,6 +5,24 @@ function renderCanvas() {
                 <img onclick="toggleFullscreen()" id="fullScreenBtn" class="fullscreen-img" src="./img/10_controls/fullscreen.png" alt="">
             </div>
             <canvas id="canvas" width="720px" height="480px"></canvas>
+                    <div class="controls-mobile" id="controlsMobile">
+            <div class="move-buttons">
+                <button id="moveLeft" class="control-btns">
+                    <img class="arrow-img" src="./img/10_controls/arrow_left.png" alt="">
+                </button>
+                <button id="moveRight" class="control-btns">
+                    <img class="arrow-img" src="./img/10_controls/arrow_right.png" alt="">
+                </button>
+            </div>
+            <div class="jump-throw-buttons">
+                <button id="jump" class="control-btns">
+                    <img class="arrow-img" src="./img/10_controls/arrow-up.png" alt="">
+                </button>
+                <button id="throw" class="control-btns">
+                    <img class="arrow-img" src="./img/10_controls/throw-arrow.png" alt="">
+                </button>
+            </div>
+        </div>
     `;
 }
 

@@ -70,8 +70,8 @@ function exitFullScreen() {
     if (canvas) {
         canvas.width = 720;
         canvas.height = 480;
-        controlsFullscreen.style.position = "relative";
-        controlsFullscreen.style.right = "-580px";
+        controlsFullscreen.style.position = "absolute";
+        controlsFullscreen.style.right = "50px";
     }
 }
 
@@ -163,7 +163,6 @@ function backToStartScreen() {
  */
 function showImpressum() {
     impressum.style.display = "flex";
-    intro.style.display = "none";
 }
 
 /**
@@ -171,7 +170,6 @@ function showImpressum() {
  */
 function closeImpressum() {
     impressum.style.display = "none";
-    intro.style.display = "flex";
 }
 
 /**
