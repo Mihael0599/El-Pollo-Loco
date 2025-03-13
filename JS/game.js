@@ -33,6 +33,7 @@ function startGame() {
     playBckgorundMusic();
     initLevel();
     checkMute();
+    resizeCanvas();
     world = new World(canvas, keyboard);
 }
 
@@ -43,14 +44,15 @@ function toggleFullscreen() {
     fullscreen = document.getElementById("gameScreen");
     if (!document.fullscreenElement) {
         if (fullscreen.requestFullscreen) {
-            fullscreen.requestFullscreen().then(resizeCanvas);
+            fullscreen.requestFullscreen().then(resizeCanvas)
         } else if (fullscreen.webkitRequestFullscreen) {
-            fullscreen.webkitRequestFullscreen().then(resizeCanvas);
+            fullscreen.webkitRequestFullscreen().then(resizeCanvas)
         } else if (fullscreen.msRequestFullscreen) {
-            fullscreen.msRequestFullscreen().then(resizeCanvas);
+            fullscreen.msRequestFullscreen().then(resizeCanvas)
         } else if (fullscreen.mozRequestFullScreen) {
-            fullscreen.mozRequestFullScreen().then(resizeCanvas);
+            fullscreen.mozRequestFullScreen().then(resizeCanvas)
         }
+        controlsMobile.remove();
     } else {
         exitFullScreen();
     }
@@ -66,25 +68,18 @@ function exitFullScreen() {
         document.webkitExitFullscreen();
     } else if (document.msExitFullscreen) {
         document.msExitFullscreen();
-    } 
-    if (canvas) {
-        canvas.width = 720;
-        canvas.height = 480;
-        controlsFullscreen.style.position = "absolute";
-        controlsFullscreen.style.right = "50px";
     }
+    canvas.style.maxWidth = "720px"
+    canvas.style.maxHeight = "480px";
 }
 
 /**
  * Adjusts the canvas size to fit the full screen.
  */
 function resizeCanvas() {
-    controlsFullscreen = document.getElementById("inGameControls");
     if (canvas) {
-        canvas.style.width = "100%";
-        canvas.style.height = "100%";
-        controlsFullscreen.style.position = "absolute";
-        controlsFullscreen.style.right = "50px";
+        canvas.style.maxWidth = "none"
+        canvas.style.maxHeight = "none";
     }
 }
 
@@ -195,6 +190,7 @@ function getCanvasTemplate() {
     controls.innerHTML = "";
     gameScreen.innerHTML = "";
     gameScreen.innerHTML += renderCanvas();
+    keyboard.bindButtonsPressEvents();
 }
 
 /**

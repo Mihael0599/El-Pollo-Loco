@@ -42,18 +42,31 @@ h2:hover {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    overflow: hidden;
 }
 
 .game-screen {
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 480px;
-    width: 720px;
+    height: 100%;
+    width: 100%;
+    max-width: 720px;
+    max-height: 480px;
+    overflow: hidden;
 }
 
 canvas {
     display: block;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    max-width: 720px;
+    max-height: 480px;
+    overflow: hidden;
 }
 
 .start-button-container {
@@ -194,7 +207,7 @@ p {
     justify-content: space-between;
     width: 480px;
     position: absolute;
-    top: 88%;
+    bottom: 20px;
 }
 
 .move-buttons {
@@ -271,15 +284,16 @@ p {
 }
 
 .in-game-controls {
+    position: absolute;
+    right: clamp(10px, 5%, 20px);
+    top: clamp(10px, 15%, 80%);
     display: flex;
     justify-content: center;
     flex-direction: row;
-    gap: 20px;
-    width: 110px;
+    gap: 10px;
+    width: clamp(80px, 10vw, 110px);
     align-items: center;
-    position: absolute;
-    right: 50px;
-    top: 50px;
+    z-index: 1;
 }
 
 @font-face {
@@ -291,10 +305,12 @@ p {
     .start-screen {
         width: 100%;
     }
-    .game-screen{
+
+    .game-screen {
         height: 100%;
         width: 100%;
     }
+
 }
 
 @media (max-width: 500px) {
@@ -316,35 +332,15 @@ p {
     .impressum {
         height: 350px;
     }
+
     .game-screen {
         height: 100%;
         width: 100%;
     }
-    .start-screen{
+
+    .start-screen {
         background-repeat: no-repeat;
-        background-size: auto;
-    }
-}
-
-@media (min-height: 700px){
-    .controls-mobile{
-        top: 74%;
-    }
-
-    .in-game-controls{
-        top: 230px;
-        right: 20%;
-    }
-}
-
-@media(max-width: 1000px){
-    .start-button-container{
-        padding-left: 110px;
-        padding-right: 110px;
-    }
-
-    .in-game-controls{
-        right: 160px;
+        background-size: cover;
     }
 }
 
@@ -371,10 +367,9 @@ p {
         display: flex;
     }
 
-/*     .game-screen{
-        height: 100%;
-        width: 100%;
-    } */
+    .in-game-controls {
+        z-index: 0;
+    }
 }
 
 @media only screen and (max-width: 720px) {
@@ -390,10 +385,6 @@ p {
 @media only screen and (max-height: 480px) {
     canvas {
         height: 100%;
-    }
-
-    .start-screen {
-        height: 100vh;
     }
 
     h1 {
