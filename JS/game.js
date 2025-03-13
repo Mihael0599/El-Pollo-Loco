@@ -171,8 +171,6 @@ window.matchMedia("(orientation: portrait)").addEventListener("change", e => {
 
     if (portrait) {
         closeImpressum();
-    } else {
-        // do something else
     }
 });
 /**
