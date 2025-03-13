@@ -166,7 +166,15 @@ function showImpressum() {
 function closeImpressum() {
     impressum.style.display = "none";
 }
+window.matchMedia("(orientation: portrait)").addEventListener("change", e => {
+    const portrait = e.matches;
 
+    if (portrait) {
+        closeImpressum();
+    } else {
+        // do something else
+    }
+});
 /**
  * plays Background music
  */
